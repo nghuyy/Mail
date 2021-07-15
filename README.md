@@ -3,6 +3,7 @@ EMail for BlackBerry OS 5 - 7
 + Use legend mail icon on BBOS7.1
 + Change notify Icon to Yellow
 + Fix utf-8 browse bug
++ Some bug fix
 ___
 
 + Using new BuildControler with Kotlin DSL
