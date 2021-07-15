@@ -18,7 +18,6 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
-Mail
 ]
 ExcludeFromBuildAll=0
 Exported=0

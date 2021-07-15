@@ -19,7 +19,7 @@ DependenciesInWorkspace=0
 [ManifestImports
 ]
 [Projects
-Mail.jdp
+Mail\Mail.jdp
 MailOS46.jdp
 MailOS47.jdp
 MailOS5.jdp
@@ -27,7 +27,6 @@ MailOS6.jdp
 MailStartup.jdp
 ]
 [ReleaseActiveProjects
-Mail.jdp
 MailOS46.jdp
 MailOS47.jdp
 MailOS5.jdp

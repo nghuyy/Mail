@@ -18,8 +18,6 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
-Mail
-MailOS46
 ]
 ExcludeFromBuildAll=0
 Exported=0
