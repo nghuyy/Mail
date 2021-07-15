@@ -491,9 +491,8 @@ public class MessageScreen extends AbstractScreenProvider {
             }
             break;
         case Keypad.KEY_BACKSPACE:
-            if(messageActions.deleteMessage(messageNode)) {
-                this.screen.close();
-            }
+            messageActions.deleteMessage(messageNode);
+            this.screen.close();
             break;
         case Keypad.KEY_SPACE:
             if(status == 0) {
@@ -541,6 +540,7 @@ public class MessageScreen extends AbstractScreenProvider {
             break;
         case SHORTCUT_DELETE:
             messageActions.deleteMessage(messageNode);
+            this.screen.close();
             break;
         case SHORTCUT_UP:
             screen.scroll(Manager.UPWARD);

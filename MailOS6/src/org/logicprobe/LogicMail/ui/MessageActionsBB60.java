@@ -30,7 +30,10 @@
  */
 package org.logicprobe.LogicMail.ui;
 
+import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.MenuItem;
+import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.image.Image;
 import net.rim.device.api.ui.image.ImageFactory;
@@ -123,6 +126,7 @@ public class MessageActionsBB60 extends MessageActions {
         contextDeleteItem = new MenuItem( LogicMailResource.MENUITEM_DELETE, 400190, 2000) {
             public void run() {
                 deleteMessage(activeMessageNode);
+                UiApplication.getUiApplication().getActiveScreen().close();
             }
         };
         contextUndeleteItem = new MenuItem(LogicMailResource.MENUITEM_UNDELETE, 400200, 2000) {

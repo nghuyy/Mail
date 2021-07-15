@@ -1136,6 +1136,7 @@ public class MailboxScreen extends AbstractScreenProvider {
             messageNode = getSelectedMessage();
             if(messageNode != null) {
                 messageActions.deleteMessage(messageNode);
+                this.screen.close();
             }
     	    break;
     	case SHORTCUT_UP:
