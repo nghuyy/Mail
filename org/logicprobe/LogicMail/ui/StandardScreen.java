@@ -69,13 +69,13 @@ public class StandardScreen extends MainScreen {
 
     /**
      * Instantiates a new standard screen.
-     * 
+     *
      * @param navigationController the navigation controller
-     * @param screenProvider the screen provider
+     * @param screenProvider       the screen provider
      */
     public StandardScreen(NavigationController navigationController, ScreenProvider screenProvider) {
         super(screenProvider.getStyle());
-        if(navigationController == null || screenProvider == null) {
+        if (navigationController == null || screenProvider == null) {
             throw new IllegalArgumentException();
         }
 
@@ -87,13 +87,13 @@ public class StandardScreen extends MainScreen {
     NavigationController getNavigationController() {
         return navigationController;
     }
-    
+
     /**
      * Initialize the screen elements.
      */
     private void initialize() {
         // Create screen elements
-        if(screenProvider.getTitle() != null) {
+        if (screenProvider.getTitle() != null) {
             this.titleField = createTitleField();
             setTitle(titleField);
         }
@@ -102,22 +102,22 @@ public class StandardScreen extends MainScreen {
         screenProvider.setNavigationController(navigationController);
         screenProvider.initFields(this);
     }
-    
+
     protected Field createTitleField() {
         return new HeaderField(
                 LogicMailResource.APPNAME
-                + " - "
-                + screenProvider.getTitle());
+                        + " - "
+                        + screenProvider.getTitle());
     }
 
     public String getScreenName() {
         return screenProvider.getScreenName();
     }
-    
+
     public String getScreenPath() {
         return screenProvider.getScreenPath();
     }
-    
+
     /* (non-Javadoc)
      * @see net.rim.device.api.ui.container.MainScreen#setStatus(net.rim.device.api.ui.Field)
      */
@@ -131,13 +131,13 @@ public class StandardScreen extends MainScreen {
      * that makes sure <code>IllegalStateException</code>s do not appear
      * if the field had previously been added, and that the field does
      * not get added if it is already the active status field.
-     * 
+     *
      * @param status the new status field
      */
     private void superSetStatusImpl(Field status) {
-        if(currentStatusField != status) {
+        if (currentStatusField != status) {
             currentStatusField = status;
-            if(status != null && status.getManager() != null) {
+            if (status != null && status.getManager() != null) {
                 status.getManager().delete(status);
             }
             super.setStatus(status);
@@ -146,15 +146,14 @@ public class StandardScreen extends MainScreen {
 
     /**
      * Update status text, showing or hiding the status bar as necessary.
-     * 
+     *
      * @param statusText the status text
      */
     public void updateStatus(String statusText) {
         statusBarField.setStatusText(statusText);
-        if(statusBarField.hasStatus()) {
+        if (statusBarField.hasStatus()) {
             superSetStatusImpl(statusBarField);
-        }
-        else {
+        } else {
             superSetStatusImpl(originalStatusField);
         }
     }
@@ -163,16 +162,15 @@ public class StandardScreen extends MainScreen {
      * @see net.rim.device.api.ui.Screen#onUiEngineAttached(boolean)
      */
     protected void onUiEngineAttached(boolean attached) {
-        if(attached) {
+        if (attached) {
             super.onUiEngineAttached(true);
             updateStatus(navigationController.getCurrentStatus());
             NotificationHandler.getInstance().cancelNotification();
             screenProvider.onDisplay();
-        }
-        else {
+        } else {
             screenProvider.onUndisplay();
             superSetStatusImpl(originalStatusField);
-            super.onUiEngineAttached(false);   
+            super.onUiEngineAttached(false);
         }
     }
 
@@ -198,8 +196,8 @@ public class StandardScreen extends MainScreen {
      */
     public boolean onClose() {
         boolean result = screenProvider.onClose();
-        if(result) {
-            if(this.isDisplayed()) {
+        if (result) {
+            if (this.isDisplayed()) {
                 close();
             }
         }
@@ -214,13 +212,13 @@ public class StandardScreen extends MainScreen {
     }
 
     private void initMenuItems() {
-        configItem = new MenuItem( LogicMailResource.MENUITEM_CONFIGURATION, 800000, 9000) {
+        configItem = new MenuItem(LogicMailResource.MENUITEM_CONFIGURATION, 800000, 9000) {
             public void run() {
                 AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "config");
                 showConfigScreen();
             }
         };
-        aboutItem = new MenuItem( LogicMailResource.MENUITEM_ABOUT, 800100, 9000) {
+        aboutItem = new MenuItem(LogicMailResource.MENUITEM_ABOUT, 800100, 9000) {
             public void run() {
                 AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "about");
                 // Show the about dialog
@@ -228,13 +226,13 @@ public class StandardScreen extends MainScreen {
                 dialog.doModal();
             }
         };
-        closeItem = new MenuItem( LogicMailResource.MENUITEM_CLOSE, 60000000, 9000) {
+        closeItem = new MenuItem(LogicMailResource.MENUITEM_CLOSE, 60000000, 9000) {
             public void run() {
                 AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "close");
                 StandardScreen.this.onClose();
             }
         };
-        exitItem = new MenuItem( LogicMailResource.MENUITEM_EXIT, 60000100, 9000) {
+        exitItem = new MenuItem(LogicMailResource.MENUITEM_EXIT, 60000100, 9000) {
             public void run() {
                 AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "exit");
                 tryShutdownApplication();
@@ -248,24 +246,23 @@ public class StandardScreen extends MainScreen {
 
         // Find out of we still have an open connection
         boolean openConnection = false;
-        for(int i=0; i<accounts.length; i++) {
-            if(accounts[i].getStatus() == AccountNode.STATUS_ONLINE) {
+        for (int i = 0; i < accounts.length; i++) {
+            if (accounts[i].getStatus() == AccountNode.STATUS_ONLINE) {
                 openConnection = true;
                 break;
             }
         }
 
-        if(openConnection) {
-            if(Dialog.ask(Dialog.D_YES_NO, LogicMailResource.BASE_CLOSEANDEXIT) == Dialog.YES) {
-                for(int i=0; i<accounts.length; i++) {
-                    if(accounts[i].getStatus() == AccountNode.STATUS_ONLINE) {
-                        accounts[i].requestDisconnect(true);
-                    }
+        if (openConnection) {
+            //if(Dialog.ask(Dialog.D_YES_NO, LogicMailResource.BASE_CLOSEANDEXIT) == Dialog.YES) {
+            for (int i = 0; i < accounts.length; i++) {
+                if (accounts[i].getStatus() == AccountNode.STATUS_ONLINE) {
+                    accounts[i].requestDisconnect(true);
                 }
-                doShutdownProcess();
             }
-        }
-        else {
+            doShutdownProcess();
+            //}
+        } else {
             doShutdownProcess();
         }
     }
@@ -276,25 +273,25 @@ public class StandardScreen extends MainScreen {
         // state, then this needs to be refactored into a common ScreenProvider
         // method.
         Screen screen = this;
-        while(screen != null) {
-            if(screen instanceof StandardScreen) {
-                ScreenProvider provider = ((StandardScreen)screen).screenProvider;
-                if(provider instanceof MailHomeScreen) {
-                    ((MailHomeScreen)provider).saveScreenMetadata();
+        while (screen != null) {
+            if (screen instanceof StandardScreen) {
+                ScreenProvider provider = ((StandardScreen) screen).screenProvider;
+                if (provider instanceof MailHomeScreen) {
+                    ((MailHomeScreen) provider).saveScreenMetadata();
                     break;
                 }
             }
             screen = screen.getScreenBelow();
         }
-        
+
         cleanupTitleField(titleField);
         LogicMail.shutdownApplication();
     }
 
     protected void cleanupTitleField(Field titleField) {
-        ((HeaderField)titleField).removeListeners();
+        ((HeaderField) titleField).removeListeners();
     }
-    
+
     /**
      * Shows the configuration screen.
      * Subclasses should override this method if they need to
@@ -310,7 +307,7 @@ public class StandardScreen extends MainScreen {
      */
     protected void makeMenu(Menu menu, int instance) {
         screenProvider.makeMenu(menu, instance);
-        if(instance == Menu.INSTANCE_DEFAULT) {
+        if (instance == Menu.INSTANCE_DEFAULT) {
             menu.add(configItem);
             menu.add(aboutItem);
             menu.add(closeItem);
@@ -342,14 +339,14 @@ public class StandardScreen extends MainScreen {
     boolean navigationClickDefault(int status, int time) {
         return super.navigationClick(status, time);
     }
-    
+
     /* (non-Javadoc)
      * @see net.rim.device.api.ui.Screen#navigationUnclick(int, int)
      */
     protected boolean navigationUnclick(int status, int time) {
         return screenProvider.navigationUnclick(status, time);
     }
-    
+
     /**
      * Provides a way for <code>ScreenProvider</code> implementations to call
      * {@link net.rim.device.api.ui.Screen#navigationUnclick(int, int)} if they
@@ -378,11 +375,11 @@ public class StandardScreen extends MainScreen {
     boolean keyCharDefault(char c, int status, int time) {
         return super.keyChar(c, status, time);
     }
-    
+
     /**
      * Gets the enabled state of a shortcut button.
      * Provided for subclasses that support shortcut buttons.
-     * 
+     *
      * @param id the ID of the button
      * @return the enabled state
      */
@@ -394,14 +391,14 @@ public class StandardScreen extends MainScreen {
     /**
      * Sets the enabled state of a shortcut button.
      * Provided for subclasses that support shortcut buttons.
-     * 
-     * @param id the ID of the button
+     *
+     * @param id      the ID of the button
      * @param enabled the enabled state
      */
     public void setShortcutEnabled(int id, boolean enabled) {
         // Shortcuts not supported by the base screen class
     }
-    
+
     /**
      * Shows the virtual keyboard, if applicable to this device
      */
