@@ -48,10 +48,10 @@ public final class AppInfo {
     private static PersistentObject store;
     private static PersistableAppInfo persistableInfo;
     
-    private static final Bitmap icon = Bitmap.getBitmapResource("logicmail.png");
-    private static final Bitmap rolloverIcon = Bitmap.getBitmapResource("logicmail-rollover.png");
-    private static final Bitmap newMessagesIcon = Bitmap.getBitmapResource("logicmail-new.png");
-    private static final Bitmap newMessagesRolloverIcon = Bitmap.getBitmapResource("logicmail-new-rollover.png");
+    private static final Bitmap icon = Bitmap.getBitmapResource("messages.png");
+    private static final Bitmap rolloverIcon = Bitmap.getBitmapResource("messages_roll.png");
+    private static final Bitmap newMessagesIcon = Bitmap.getBitmapResource("messages_new.png");
+    private static final Bitmap newMessagesRolloverIcon = Bitmap.getBitmapResource("messages_new_roll.png");
     private static String PARAM_RELEASE = "-release";
     private static String appName;
     private static String appVersion;
@@ -118,7 +118,7 @@ public final class AppInfo {
     }
 
     public static String getVersion() {
-    	return appVersion;
+        return appVersion;
     }
     
     public static String getVersionMoniker() {
@@ -126,7 +126,7 @@ public final class AppInfo {
     }
     
     public static String getPlatformVersion() {
-    	return platformInfo.getPlatformVersion();
+        return platformInfo.getPlatformVersion();
     }
     
     public static boolean isRelease() {
@@ -134,19 +134,19 @@ public final class AppInfo {
     }
     
     public static Bitmap getIcon() {
-    	return icon;
+        return icon;
     }
     
     public static Bitmap getRolloverIcon() {
-    	return rolloverIcon;
+        return rolloverIcon;
     }
     
     public static Bitmap getNewMessagesIcon() {
-    	return newMessagesIcon;
+        return newMessagesIcon;
     }
     
     public static Bitmap getNewMessagesRolloverIcon() {
-    	return newMessagesRolloverIcon;
+        return newMessagesRolloverIcon;
     }
     
     public static String getLastVersion() {

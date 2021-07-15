@@ -40,7 +40,7 @@ res\icons\messages.png
 ]
 Listing=0
 Options=-quiet 
-OutputFileName=LogicMail
+OutputFileName=EMail
 [PackageProtection
 ]
 RibbonPosition=0
@@ -51,7 +51,7 @@ RunOnStartup=1
 SkipCompile=0
 StartupTier=7
 SystemModule=0
-Title=LogicMail
+Title=EMail
 Type=0
 Vendor=VNAPPS.COM
-Version=2.0.1
+Version=2.0.2
