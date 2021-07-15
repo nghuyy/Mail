@@ -14,6 +14,7 @@ var bb_buildfile = listOf<String>(
 )
 task("build") {
     doLast {
+        delete("dist/raw")
         copy {
             from(".")
             into("dist/raw")
@@ -34,7 +35,8 @@ task("build") {
 tasks.register<Zip>("zip") {
     var jdp_text = File("MailStartup/MailStartup.jdp").readText(charset("utf-8"))
     var version = jdp_text.split("Version=")[1].trim()
-    archiveFileName.set("${version}.zip")
+    var DependsOn = jdp_text.split("[DependsOn\r\n")[1].trim().split("\r\n")[0]
+    archiveFileName.set("${DependsOn}-${version}.zip")
     destinationDirectory.set(layout.projectDirectory.dir("dist"))
     from("dist/raw")
 }
