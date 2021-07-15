@@ -18,6 +18,7 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
+MailOS5
 ]
 ExcludeFromBuildAll=0
 Exported=0
@@ -30,6 +31,8 @@ MailOS6\res\icons\message-mark-opened_32x32.png
 MailOS6\res\icons\message-mark-unopened_32x32.png
 MailOS6\res\icons\message-reply-all_32x32.png
 MailOS6\res\icons\message-undelete_32x32.png
+MailOS6\res\icons\messages.png
+MailOS6\res\icons\messages_roll.png
 MailOS6\res\icons\search_32x32.png
 MailOS6\src\org\logicprobe\LogicMail\PlatformInfoBB60.java
 MailOS6\src\org\logicprobe\LogicMail\ui\BrowserField2Renderer.java
@@ -41,14 +44,11 @@ MailOS6\src\org\logicprobe\LogicMail\ui\ScreenFactoryBB60.java
 MailOS6\src\org\logicprobe\LogicMail\ui\StandardScreenBB60.java
 MailOS6\src\org\logicprobe\LogicMail\ui\StandardTouchScreenBB60.java
 MailOS6\src\org\logicprobe\LogicMail\util\UtilFactoryBB60.java
-res\icons\messages.png
-res\icons\messages_roll.png
 ]
 HaveAlxImports=0
 HaveDefs=0
 HaveImports=0
 [Icons
-res\icons\messages.png
 ]
 [ImplicitRules
 ]
@@ -61,7 +61,6 @@ OutputFileName=MailOS6
 ]
 RibbonPosition=0
 [RolloverIcons
-res\icons\messages_roll.png
 ]
 RunOnStartup=0
 SkipCompile=0

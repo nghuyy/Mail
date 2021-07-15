@@ -18,6 +18,7 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
+MailOS47
 ]
 ExcludeFromBuildAll=0
 Exported=0

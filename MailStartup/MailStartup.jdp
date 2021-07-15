@@ -24,9 +24,9 @@ Description=Email
 ExcludeFromBuildAll=0
 Exported=0
 [Files
-org\logicprobe\LogicMail\MailStartup.java
 res\icons\messages.png
 res\icons\messages_roll.png
+src\org\logicprobe\LogicMail\MailStartup.java
 ]
 HaveAlxImports=0
 HaveDefs=0
@@ -54,4 +54,4 @@ SystemModule=0
 Title=EMail
 Type=0
 Vendor=VNAPPS.COM
-Version=2.0.3
+Version=2.0.4
