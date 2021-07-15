@@ -43,6 +43,7 @@ import javax.microedition.io.file.FileConnection;
 
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.i18n.MessageFormat;
+import net.rim.device.api.system.Alert;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.KeypadListener;
@@ -103,18 +104,18 @@ public class MessageScreen extends AbstractScreenProvider {
     private static String TRIPLE_CENTER_DOT = "\u00B7 \u00B7 \u00B7";
     private VerticalFieldManager screenFieldManager;
     private BorderedFieldManager propertiesFieldManager;
-	private BorderedFieldManager headerFieldManager;
-	private LabelField attachmentsLabelField;
-	private BorderedFieldManager attachmentsFieldManager;
-	private VerticalFieldManager messageFieldManager;
-	private ButtonField loadEntireMessageButton;
+        private BorderedFieldManager headerFieldManager;
+        private LabelField attachmentsLabelField;
+        private BorderedFieldManager attachmentsFieldManager;
+        private VerticalFieldManager messageFieldManager;
+        private ButtonField loadEntireMessageButton;
     private MessageActions messageActions;
     
     private MenuItem saveAttachmentItem;
     private MenuItem displayHtmlItem;
     private MenuItem displayPlainTextItem;
     private MenuItem compositionItem;
-	
+        
     private boolean firstDisplay = true;
     private int displayFormat;
     private MessageNode messageNode;
@@ -280,15 +281,15 @@ public class MessageScreen extends AbstractScreenProvider {
     }
     
     private MessageNodeListener messageNodeListener = new MessageNodeListener() {
-		public void messageStatusChanged(MessageNodeEvent e) {
-			messageNode_MessageStatusChanged(e);
-		}
+                public void messageStatusChanged(MessageNodeEvent e) {
+                        messageNode_MessageStatusChanged(e);
+                }
     };
     
     private FieldChangeListener fieldChangeListener = new FieldChangeListener() {
-		public void fieldChanged(Field field, int context) {
-			message_FieldChanged(field, context);
-		}
+                public void fieldChanged(Field field, int context) {
+                        message_FieldChanged(field, context);
+                }
     };
     
     /* (non-Javadoc)
@@ -309,39 +310,39 @@ public class MessageScreen extends AbstractScreenProvider {
         
         padAndFocusScreen();
         
-    	messageNode.addMessageNodeListener(messageNodeListener);
-    	if(firstDisplay) {
+        messageNode.addMessageNodeListener(messageNodeListener);
+        if(firstDisplay) {
             if(!messageNode.refreshMessage(displayFormat)) {
                 renderMessage();
             }
-    	    firstDisplay = false;
-    	}
-    	else if(!messageRendered) {
-    		renderMessage();
-    	}
-    	
-    	if(hasTouchscreen) {
-    	    StandardScreen standardScreen = (StandardScreen)screen;
-    	    if(messageNode.getParent() != null
-    	            && messageNode.getParent().getParentAccount() instanceof NetworkAccountNode
-    	            && ((NetworkAccountNode)messageNode.getParent().getParentAccount()).hasMailSender()) {
+            firstDisplay = false;
+        }
+        else if(!messageRendered) {
+                renderMessage();
+        }
+        
+        if(hasTouchscreen) {
+            StandardScreen standardScreen = (StandardScreen)screen;
+            if(messageNode.getParent() != null
+                    && messageNode.getParent().getParentAccount() instanceof NetworkAccountNode
+                    && ((NetworkAccountNode)messageNode.getParent().getParentAccount()).hasMailSender()) {
                 standardScreen.setShortcutEnabled(SHORTCUT_REPLY, true);
                 standardScreen.setShortcutEnabled(SHORTCUT_FORWARD, true);
-    	    }
-    	    else {
-        	    standardScreen.setShortcutEnabled(SHORTCUT_REPLY, false);
-        	    standardScreen.setShortcutEnabled(SHORTCUT_FORWARD, false);
-    	    }
+            }
+            else {
+                    standardScreen.setShortcutEnabled(SHORTCUT_REPLY, false);
+                    standardScreen.setShortcutEnabled(SHORTCUT_FORWARD, false);
+            }
             standardScreen.setShortcutEnabled(SHORTCUT_DELETE,
                     (messageNode.getFlags() & MessageNode.Flag.DELETED) == 0);
-    	}
+        }
     }
 
-	/* (non-Javadoc)
+        /* (non-Javadoc)
      * @see org.logicprobe.LogicMail.ui.BaseScreen#onUndisplay()
      */
     public void onUndisplay() {
-    	messageNode.removeMessageNodeListener(messageNodeListener);
+        messageNode.removeMessageNodeListener(messageNodeListener);
     }
     
     /* (non-Javadoc)
@@ -382,15 +383,15 @@ public class MessageScreen extends AbstractScreenProvider {
     }
     
     private void initMenuItems() {
-	    saveAttachmentItem = new MenuItem( LogicMailResource.MENUITEM_SAVE_ATTACHMENT, 300050, 1005) {
-	        public void run() {
-	            AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "saveAttachment");
-	            Field field = attachmentsFieldManager.getFieldWithFocus();
-	            if(field instanceof AttachmentField) {
-	                saveAttachment(((AttachmentField)field).getMessagePart());
-	            }
-	        }
-	    };
+            saveAttachmentItem = new MenuItem( LogicMailResource.MENUITEM_SAVE_ATTACHMENT, 300050, 1005) {
+                public void run() {
+                    AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "saveAttachment");
+                    Field field = attachmentsFieldManager.getFieldWithFocus();
+                    if(field instanceof AttachmentField) {
+                        saveAttachment(((AttachmentField)field).getMessagePart());
+                    }
+                }
+            };
         displayHtmlItem = new MenuItem( LogicMailResource.MENUITEM_GET_HTML, 300200, 2000) {
             public void run() {
                 AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "displayHtml");
@@ -407,40 +408,40 @@ public class MessageScreen extends AbstractScreenProvider {
                 }
             }
         };
-	    compositionItem = new MenuItem( LogicMailResource.MENUITEM_COMPOSE_EMAIL, 500100, 2000) {
-	        public void run() {
-	            AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "composition");
-	            navigationController.displayComposition((NetworkAccountNode)parentAccount);
-	        }
-	    };
+            compositionItem = new MenuItem( LogicMailResource.MENUITEM_COMPOSE_EMAIL, 500100, 2000) {
+                public void run() {
+                    AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "composition");
+                    navigationController.displayComposition((NetworkAccountNode)parentAccount);
+                }
+            };
     }
     
     /* (non-Javadoc)
      * @see org.logicprobe.LogicMail.ui.BaseScreen#makeMenu(net.rim.device.api.ui.component.Menu, int)
      */
     public void makeMenu(Menu menu, int instance) {
-    	if(attachmentsFieldManager != null
-    	        && messageFieldManager.getFieldWithFocus() == attachmentsFieldManager) {
-    		if(attachmentsFieldManager.getFieldWithFocus() instanceof AttachmentField) {
-    		    if(isAttachmentSaveable((AttachmentField)attachmentsFieldManager.getFieldWithFocus())) {
-    		        menu.add(saveAttachmentItem);
-    		    }
-    		}
-    	}
-    	
-    	messageActions.makeMenu(menu, instance, messageNode, true);
-    	
-    	if(displayFormat == GlobalConfig.MESSAGE_DISPLAY_PLAIN_TEXT &&
-    	        messageHtmlAvailable) {
-    	    menu.add(displayHtmlItem);
-    	}
-    	else if(displayFormat == GlobalConfig.MESSAGE_DISPLAY_HTML &&
-    	        messagePlainTextAvailable) {
-    	    menu.add(displayPlainTextItem);
-    	}
-    	
-    	if(parentAccount instanceof NetworkAccountNode
-    	        && ((NetworkAccountNode)parentAccount).hasMailSender()) {
+        if(attachmentsFieldManager != null
+                && messageFieldManager.getFieldWithFocus() == attachmentsFieldManager) {
+                if(attachmentsFieldManager.getFieldWithFocus() instanceof AttachmentField) {
+                    if(isAttachmentSaveable((AttachmentField)attachmentsFieldManager.getFieldWithFocus())) {
+                        menu.add(saveAttachmentItem);
+                    }
+                }
+        }
+        
+        messageActions.makeMenu(menu, instance, messageNode, true);
+        
+        if(displayFormat == GlobalConfig.MESSAGE_DISPLAY_PLAIN_TEXT &&
+                messageHtmlAvailable) {
+            menu.add(displayHtmlItem);
+        }
+        else if(displayFormat == GlobalConfig.MESSAGE_DISPLAY_HTML &&
+                messagePlainTextAvailable) {
+            menu.add(displayPlainTextItem);
+        }
+        
+        if(parentAccount instanceof NetworkAccountNode
+                && ((NetworkAccountNode)parentAccount).hasMailSender()) {
             menu.add(compositionItem);
         }
     }
@@ -540,6 +541,7 @@ public class MessageScreen extends AbstractScreenProvider {
             break;
         case SHORTCUT_DELETE:
             messageActions.deleteMessage(messageNode);
+            //Message delete action
             this.screen.close();
             break;
         case SHORTCUT_UP:
@@ -563,31 +565,31 @@ public class MessageScreen extends AbstractScreenProvider {
         }
     }
     
-	private void messageNode_MessageStatusChanged(MessageNodeEvent e) {
-    	if(e.getType() == MessageNodeEvent.TYPE_CONTENT_LOADED) {
-    		boolean contentSaved = false;
-    		synchronized(requestedContentSet) {
-	    		if(requestedContentSet.size() > 0) {
-	    			Enumeration en = requestedContentSet.keys();
-	    			while(en.hasMoreElements()) {
-	    				ContentPart part = (ContentPart)en.nextElement();
-	    				MimeMessageContent content = (MimeMessageContent)messageNode.getMessageContent(part);
-	    				if(content != null) {
-	    					saveAttachmentInBackground(content, (String)requestedContentSet.get(part));
-	    					requestedContentSet.remove(part);
-	    					contentSaved = true;
-	    				}
-	    			}
-	    		}
-    		}
-    		if(!contentSaved) {
-    			renderMessage();
-    		}
-    	}
-    	else if(e.getType() == MessageNodeEvent.TYPE_FLAGS && hasTouchscreen) {
+        private void messageNode_MessageStatusChanged(MessageNodeEvent e) {
+        if(e.getType() == MessageNodeEvent.TYPE_CONTENT_LOADED) {
+                boolean contentSaved = false;
+                synchronized(requestedContentSet) {
+                        if(requestedContentSet.size() > 0) {
+                                Enumeration en = requestedContentSet.keys();
+                                while(en.hasMoreElements()) {
+                                        ContentPart part = (ContentPart)en.nextElement();
+                                        MimeMessageContent content = (MimeMessageContent)messageNode.getMessageContent(part);
+                                        if(content != null) {
+                                                saveAttachmentInBackground(content, (String)requestedContentSet.get(part));
+                                                requestedContentSet.remove(part);
+                                                contentSaved = true;
+                                        }
+                                }
+                        }
+                }
+                if(!contentSaved) {
+                        renderMessage();
+                }
+        }
+        else if(e.getType() == MessageNodeEvent.TYPE_FLAGS && hasTouchscreen) {
             ((StandardScreen)screen).setShortcutEnabled(SHORTCUT_DELETE,
                     (messageNode.getFlags() & MessageNode.Flag.DELETED) == 0);
-    	}
+        }
     }
 
     private void renderMessage() {
@@ -595,18 +597,18 @@ public class MessageScreen extends AbstractScreenProvider {
         
         displayFormat = messageNode.getRefreshDisplayFormat();
         
-		Vector messageFields = new Vector();
-    	
-    	// Add fields to display the message body
-    	addMessageBodyFields(messageFields);
-    	
-    	if(messageFields.size() == 0) {
-			addEmptyPlaceholderField(messageFields);
-    	}
-    	
-    	// Add the attachments list at the bottom of the message
+                Vector messageFields = new Vector();
+        
+        // Add fields to display the message body
+        addMessageBodyFields(messageFields);
+        
+        if(messageFields.size() == 0) {
+                        addEmptyPlaceholderField(messageFields);
+        }
+        
+        // Add the attachments list at the bottom of the message
         addAttachmentFields(messageFields);
-    	
+        
         if(!messageNode.isMessageComplete() && messageNode.getMessageSize() > 0) {
             loadEntireMessageButton = new ButtonField(
                     LogicMailResource.MENUITEM_LOAD_ENTIRE_MESSAGE,
@@ -617,8 +619,8 @@ public class MessageScreen extends AbstractScreenProvider {
             loadEntireMessageButton = null;
         }
         
-		drawMessageFields(messageFields);
-		messageRendered = true;
+                drawMessageFields(messageFields);
+                messageRendered = true;
     }
 
     private void updateAvailableDisplayableParts() {
@@ -641,13 +643,13 @@ public class MessageScreen extends AbstractScreenProvider {
 
     private void addMessageBodyFields(Vector messageFields) {
         MimeMessagePart[] displayableParts = MimeMessagePartTransformer.getDisplayableParts(messageNode.getMessageStructure(), displayFormat);
-    	for(int i=0; i<displayableParts.length; i++) {
-    		MimeMessageContent content = messageNode.getMessageContent(displayableParts[i]);
-    		if(content != null) {
-    			Field field = MessageFieldFactory.createMessageField(messageNode, content);
-    			if(field == null) { continue; }
-    			
-    			messageFields.addElement(field);
+        for(int i=0; i<displayableParts.length; i++) {
+                MimeMessageContent content = messageNode.getMessageContent(displayableParts[i]);
+                if(content != null) {
+                        Field field = MessageFieldFactory.createMessageField(messageNode, content);
+                        if(field == null) { continue; }
+                        
+                        messageFields.addElement(field);
                 
                 if(content.isPartComplete() != MimeMessageContent.PART_COMPLETE) {
                     LabeledSeparatorField cutOffField = new LabeledSeparatorField(TRIPLE_CENTER_DOT, 0);
@@ -660,8 +662,8 @@ public class MessageScreen extends AbstractScreenProvider {
                         "view", "message", "displayableContent",
                         displayableParts[i].getMimeType() + '/' + displayableParts[i].getMimeSubtype(),
                         (content.isPartComplete() == MimeMessageContent.PART_COMPLETE) ? "f" : "50");
-    		}
-    	}
+                }
+        }
     }
 
     private void addEmptyPlaceholderField(Vector messageFields) {
@@ -696,30 +698,30 @@ public class MessageScreen extends AbstractScreenProvider {
         }
     }
 
-	private void drawMessageFields(final Vector messageFields) {
+        private void drawMessageFields(final Vector messageFields) {
         if(messageFields == null) {
             return;
         }
-    	invokeLater(new Runnable() { public void run() {
+        invokeLater(new Runnable() { public void run() {
             int size = messageFields.size();
-        	messageFieldManager.deleteAll();
-        	
+                messageFieldManager.deleteAll();
+                
             for(int i=0;i<size;++i) {
                 Field field = (Field)messageFields.elementAt(i);
                 if(field != null) {
                     messageFieldManager.add(field);
                 }
                 if(i != size-1 && !(messageFields.elementAt(i+1) instanceof LabeledSeparatorField)) {
-                	messageFieldManager.add(new SeparatorField());
+                        messageFieldManager.add(new SeparatorField());
                 }
             }
             messageFieldManager.add(new NullField(Field.FOCUSABLE));
             
             for(int i=0;i<size;++i) {
-            	Field field = (Field)messageFields.elementAt(i);
-            	if(field != null) {
-            		field.setChangeListener(fieldChangeListener);
-            	}
+                Field field = (Field)messageFields.elementAt(i);
+                if(field != null) {
+                        field.setChangeListener(fieldChangeListener);
+                }
             }
             
             // Add the attachment indicator header
@@ -753,11 +755,11 @@ public class MessageScreen extends AbstractScreenProvider {
         }});
     }
 
-	private void padAndFocusScreen() {
-	    // Check for the one case where we want the user to see all the message
-	    // properties fields upon opening the message
-	    if(isOutgoingWithErrors) { return; }
-	    
+        private void padAndFocusScreen() {
+            // Check for the one case where we want the user to see all the message
+            // properties fields upon opening the message
+            if(isOutgoingWithErrors) { return; }
+            
         // Determine how much padding is necessary at the bottom of the
         // field to ensure a correct initial scroll position
         int paddingSize = Display.getHeight()
@@ -773,38 +775,38 @@ public class MessageScreen extends AbstractScreenProvider {
         // top of the screen
         messageFieldManager.setFocus();
         screenFieldManager.setVerticalScroll(headerFieldManager.getContentTop());
-	}
-	
-	/**
-	 * Save the message attachment.
-	 * 
-	 * @param contentPart Attachment part to save
-	 */
+        }
+        
+        /**
+         * Save the message attachment.
+         * 
+         * @param contentPart Attachment part to save
+         */
     private void saveAttachment(ContentPart contentPart) {
-    	MimeMessageContent content = messageNode.getMessageContent(contentPart);
-    	FileSaveDialog dialog = new FileSaveDialog(contentPart.getName());
-		if(dialog.doModal() != Dialog.CANCEL) {
+        MimeMessageContent content = messageNode.getMessageContent(contentPart);
+        FileSaveDialog dialog = new FileSaveDialog(contentPart.getName());
+                if(dialog.doModal() != Dialog.CANCEL) {
             AnalyticsDataCollector.getInstance().onMediaEvent(
                     getScreenPath(), getScreenName(),
                     "view", "message", "attachmentDownload",
                     contentPart.getMimeType() + '/' + contentPart.getMimeSubtype(),
                     "p");
-		    
-	    	if(content != null) {
-	    		// Content has been downloaded already, so just save it
-	    		saveAttachmentInBackground(content, dialog.getFileUrl());
-	    	}
-	    	else {
-	    		// Add the requested content to the expected set
-	    		synchronized(requestedContentSet) {
-	    			requestedContentSet.put(contentPart, dialog.getFileUrl());
-	    		}
-	    		
-	    		// Download content from server, then save it
-	    		messageNode.requestContentPart(contentPart);
-	    	}
-		}
-	}
+                    
+                if(content != null) {
+                        // Content has been downloaded already, so just save it
+                        saveAttachmentInBackground(content, dialog.getFileUrl());
+                }
+                else {
+                        // Add the requested content to the expected set
+                        synchronized(requestedContentSet) {
+                                requestedContentSet.put(contentPart, dialog.getFileUrl());
+                        }
+                        
+                        // Download content from server, then save it
+                        messageNode.requestContentPart(contentPart);
+                }
+                }
+        }
 
     private void saveAttachmentInBackground(MimeMessageContent content, String fileUrl) {
         // Start the save thread
@@ -812,91 +814,91 @@ public class MessageScreen extends AbstractScreenProvider {
     }
     
     private class SaveAttachmentThread extends Thread {
-    	private MimeMessageContent content;
-    	private String fileUrl;
-    	
-    	public SaveAttachmentThread(MimeMessageContent content, String fileUrl) {
-    		this.content = content;
-    		this.fileUrl = fileUrl;
-    	}
+        private MimeMessageContent content;
+        private String fileUrl;
+        
+        public SaveAttachmentThread(MimeMessageContent content, String fileUrl) {
+                this.content = content;
+                this.fileUrl = fileUrl;
+        }
 
-    	public void run() {
-    		boolean success = false;
-			byte[] rawData = content.getRawData();
-			if(rawData != null) {
-				try {
-					FileConnection fileConnection = (FileConnection)Connector.open(fileUrl);
-					if(fileConnection.exists()) {
-	                    final boolean[] overwriteExisting = new boolean[1];
-		                UiApplication.getUiApplication().invokeAndWait(new Runnable() {
-		                    public void run() {
-		                        int result = Dialog.ask(
-		                                Dialog.D_YES_NO,
-		                                LogicMailResource.MESSAGE_OVERWRITE_EXISTING_FILE,
-		                                Dialog.NO);
-		                        if(result == Dialog.YES) {
-		                            overwriteExisting[0] = true;
-		                        }
-		                    }
-		                });
-		                if(overwriteExisting[0]) {
-		                    fileConnection.delete();
-		                }
-		                else {
-		                    fileConnection.close();
-		                    fileConnection = null;
-		                }
-					}
-					if(fileConnection != null) {
-				        // Notify the user that an attachment is being saved
-				        UiApplication.getUiApplication().invokeLater(new Runnable() {
-				            public void run() {
-				                Status.show(LogicMailResource.MESSAGE_SAVING_ATTACHMENT);
-				            }
-				        });
-    					fileConnection.create();
-    					DataOutputStream outputStream = fileConnection.openDataOutputStream();
-    					outputStream.write(rawData);
-    					outputStream.close();
-    					fileConnection.close();
-					}
-					success = true;
-				} catch (IOException e) {
-					EventLogger.logEvent(AppInfo.GUID, ("Unable to save: " + fileUrl).getBytes(), EventLogger.ERROR);
-					AnalyticsDataCollector.getInstance().onApplicationError("Unable to save attachment: " + e.toString());
-					success = false;
-				}
-			}
-			else {
-				// No raw data to save
-				success = false;
-			}
-			
-			if(!success) {
-		        UiApplication.getUiApplication().invokeLater(new Runnable() {
-		            public void run() {
-	                    Status.show(LogicMailResource.MESSAGE_UNABLE_TO_SAVE_ATTACHMENT);
-		            }
-		        });
-			}
-			else {
-			    ContentPart part = content.getMessagePart();
-	            AnalyticsDataCollector.getInstance().onMediaEvent(
-	                    getScreenPath(), getScreenName(),
-	                    "view", "message", "attachmentDownload",
-	                    part.getMimeType() + '/' + part.getMimeSubtype(),
-	                    "f");
-			}
-    	}
+        public void run() {
+                boolean success = false;
+                        byte[] rawData = content.getRawData();
+                        if(rawData != null) {
+                                try {
+                                        FileConnection fileConnection = (FileConnection)Connector.open(fileUrl);
+                                        if(fileConnection.exists()) {
+                            final boolean[] overwriteExisting = new boolean[1];
+                                UiApplication.getUiApplication().invokeAndWait(new Runnable() {
+                                    public void run() {
+                                        int result = Dialog.ask(
+                                                Dialog.D_YES_NO,
+                                                LogicMailResource.MESSAGE_OVERWRITE_EXISTING_FILE,
+                                                Dialog.NO);
+                                        if(result == Dialog.YES) {
+                                            overwriteExisting[0] = true;
+                                        }
+                                    }
+                                });
+                                if(overwriteExisting[0]) {
+                                    fileConnection.delete();
+                                }
+                                else {
+                                    fileConnection.close();
+                                    fileConnection = null;
+                                }
+                                        }
+                                        if(fileConnection != null) {
+                                        // Notify the user that an attachment is being saved
+                                        UiApplication.getUiApplication().invokeLater(new Runnable() {
+                                            public void run() {
+                                                Status.show(LogicMailResource.MESSAGE_SAVING_ATTACHMENT);
+                                            }
+                                        });
+                                        fileConnection.create();
+                                        DataOutputStream outputStream = fileConnection.openDataOutputStream();
+                                        outputStream.write(rawData);
+                                        outputStream.close();
+                                        fileConnection.close();
+                                        }
+                                        success = true;
+                                } catch (IOException e) {
+                                        EventLogger.logEvent(AppInfo.GUID, ("Unable to save: " + fileUrl).getBytes(), EventLogger.ERROR);
+                                        AnalyticsDataCollector.getInstance().onApplicationError("Unable to save attachment: " + e.toString());
+                                        success = false;
+                                }
+                        }
+                        else {
+                                // No raw data to save
+                                success = false;
+                        }
+                        
+                        if(!success) {
+                        UiApplication.getUiApplication().invokeLater(new Runnable() {
+                            public void run() {
+                            Status.show(LogicMailResource.MESSAGE_UNABLE_TO_SAVE_ATTACHMENT);
+                            }
+                        });
+                        }
+                        else {
+                            ContentPart part = content.getMessagePart();
+                    AnalyticsDataCollector.getInstance().onMediaEvent(
+                            getScreenPath(), getScreenName(),
+                            "view", "message", "attachmentDownload",
+                            part.getMimeType() + '/' + part.getMimeSubtype(),
+                            "f");
+                        }
+        }
     }
 
-	/**
-	 * Invoked by a field when a property changes. 
-	 * @param field The field that changed.
-	 * @param context Information specifying the origin of the change
-	 * 
-	 * @see FieldChangeListener#fieldChanged(Field, int)
-	 */
+        /**
+         * Invoked by a field when a property changes. 
+         * @param field The field that changed.
+         * @param context Information specifying the origin of the change
+         * 
+         * @see FieldChangeListener#fieldChanged(Field, int)
+         */
     private void message_FieldChanged(Field field, int context) {
         if(field instanceof ActiveFieldManager) {
             if((context & ActiveFieldManager.ACTION_SEND_EMAIL) != 0) {
@@ -914,9 +916,9 @@ public class MessageScreen extends AbstractScreenProvider {
                 }
             }
         }
-	}
+        }
 
-	/**
+        /**
      * Run the Unicode normalizer on the provide string,
      * only if normalization is enabled in the configuration.
      * If normalization is disabled, this method returns

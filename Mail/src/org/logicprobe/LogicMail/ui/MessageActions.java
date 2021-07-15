@@ -160,8 +160,9 @@ public class MessageActions {
         deleteItem = new MenuItem(LogicMailResource.MENUITEM_DELETE, 400170, 2000) {
             public void run() {
                 deleteMessage(activeMessageNode);
-                if(UiApplication.getUiApplication().getActiveScreen().isDisplayed())
-                    UiApplication.getUiApplication().getActiveScreen().close();
+                String scr = UiApplication.getUiApplication().getActiveScreen().getClass().toString();
+                Dialog.alert(scr+ "MSG ActionRoot");
+                UiApplication.getUiApplication().getActiveScreen().close();
             }
         };
         undeleteItem = new MenuItem(LogicMailResource.MENUITEM_UNDELETE, 400180, 2000) {
