@@ -19,7 +19,16 @@ task("build") {
             into("dist/raw")
             include("*.cod", "*.jad")
         }
-
+        copy {
+            from("Mail")
+            into("dist/raw")
+            include("*.cod", "*.jad")
+        }
+        copy {
+            from("MailStartup")
+            into("dist/raw")
+            include("*.cod", "*.jad")
+        }
     }
 }
 tasks.register<Zip>("zip") {
@@ -38,5 +47,6 @@ task("clean") {
         delete(fileTree("MailStartup").matching {
             include(bb_buildfile)
         })
+        delete("dist")
     }
 }
