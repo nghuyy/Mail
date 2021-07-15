@@ -19,6 +19,7 @@ AutoRestart=0
 ]
 [DependsOn
 ]
+Description=VNAPPS
 ExcludeFromBuildAll=0
 Exported=0
 [Files
@@ -385,6 +386,7 @@ HaveAlxImports=0
 HaveDefs=0
 HaveImports=0
 [Icons
+res\icons\messages.png
 ]
 [ImplicitRules
 ]
@@ -397,9 +399,12 @@ OutputFileName=Mail
 ]
 RibbonPosition=0
 [RolloverIcons
+res\icons\messages_roll.png
 ]
 RunOnStartup=0
 SkipCompile=0
 StartupTier=7
 SystemModule=0
 Type=2
+Vendor=VNAPPS
+Version=2.0.1

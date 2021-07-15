@@ -9,7 +9,6 @@ Debug
 Release
 ]
 [DebugActiveProjects
-MailStartup.jdp
 ]
 DependenciesInWorkspace=0
 [ImplicitRules
@@ -24,7 +23,6 @@ MailOS46.jdp
 MailOS47.jdp
 MailOS5.jdp
 MailOS6.jdp
-MailStartup.jdp
 ]
 [ReleaseActiveProjects
 Mail.jdp
@@ -32,5 +30,4 @@ MailOS46.jdp
 MailOS47.jdp
 MailOS5.jdp
 MailOS6.jdp
-MailStartup.jdp
 ]

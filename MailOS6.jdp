@@ -45,11 +45,14 @@ MailOS6\res\icons\message-mark-unopened_32x32.png
 MailOS6\res\icons\message-reply-all_32x32.png
 MailOS6\res\icons\message-undelete_32x32.png
 MailOS6\res\icons\search_32x32.png
+res\icons\messages.png
+res\icons\messages_roll.png
 ]
 HaveAlxImports=0
 HaveDefs=0
 HaveImports=0
 [Icons
+res\icons\messages.png
 ]
 [ImplicitRules
 ]
@@ -62,6 +65,7 @@ OutputFileName=MailOS6
 ]
 RibbonPosition=0
 [RolloverIcons
+res\icons\messages_roll.png
 ]
 RunOnStartup=0
 SkipCompile=0
