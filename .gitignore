@@ -14,3 +14,4 @@ gradlew
 gradlew.bat
 .gradle
 dist/
+build/
