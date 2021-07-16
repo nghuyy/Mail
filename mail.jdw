@@ -11,8 +11,10 @@ Release
 [DebugActiveProjects
 Mail\Mail.jdp
 MailOS46.jdp
+MailOS46\MailOS46.jdp
 MailOS47.jdp
-MailOS5.jdp
+MailOS47\MailOS47.jdp
+MailOS5\MailOS5.jdp
 MailStartup\MailStartup.jdp
 ]
 DependenciesInWorkspace=0
@@ -25,9 +27,9 @@ DependenciesInWorkspace=0
 ]
 [Projects
 Mail\Mail.jdp
-MailOS46.jdp
-MailOS47.jdp
-MailOS5.jdp
+MailOS46\MailOS46.jdp
+MailOS47\MailOS47.jdp
+MailOS5\MailOS5.jdp
 MailStartup\MailStartup.jdp
 ]
 [ReleaseActiveProjects

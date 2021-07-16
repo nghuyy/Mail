@@ -1,0 +1,9 @@
+MIDlet-Name: Mail
+MIDlet-Version: 2.0.9
+MIDlet-Vendor: VNAPPS
+MIDlet-Description: VNAPPS
+MIDlet-Jar-URL: Mail.jar
+MIDlet-Jar-Size: 0
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1
+RIM-Library-Flags: 2

@@ -23,10 +23,10 @@ Mail
 ExcludeFromBuildAll=0
 Exported=0
 [Files
-MailOS46\org\logicprobe\LogicMail\PlatformInfoBB46.java
-MailOS46\org\logicprobe\LogicMail\ui\FieldFactoryBB46.java
-MailOS46\org\logicprobe\LogicMail\ui\NotificationHandlerBB46.java
-MailOS46\org\logicprobe\LogicMail\util\UtilFactoryBB46.java
+src\org\logicprobe\LogicMail\PlatformInfoBB46.java
+src\org\logicprobe\LogicMail\ui\FieldFactoryBB46.java
+src\org\logicprobe\LogicMail\ui\NotificationHandlerBB46.java
+src\org\logicprobe\LogicMail\util\UtilFactoryBB46.java
 ]
 HaveAlxImports=0
 HaveDefs=0

@@ -23,11 +23,11 @@ MailOS47
 ExcludeFromBuildAll=0
 Exported=0
 [Files
-MailOS5\org\logicprobe\LogicMail\PlatformInfoBB50.java
-MailOS5\org\logicprobe\LogicMail\ui\FieldFactoryBB50.java
-MailOS5\org\logicprobe\LogicMail\ui\ScreenFactoryBB50.java
-MailOS5\org\logicprobe\LogicMail\util\NetworkConnectorBB50.java
-MailOS5\org\logicprobe\LogicMail\util\UtilFactoryBB50.java
+src\org\logicprobe\LogicMail\PlatformInfoBB50.java
+src\org\logicprobe\LogicMail\ui\FieldFactoryBB50.java
+src\org\logicprobe\LogicMail\ui\ScreenFactoryBB50.java
+src\org\logicprobe\LogicMail\util\NetworkConnectorBB50.java
+src\org\logicprobe\LogicMail\util\UtilFactoryBB50.java
 ]
 HaveAlxImports=0
 HaveDefs=0

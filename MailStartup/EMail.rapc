@@ -1,0 +1,12 @@
+MIDlet-Name: MailStartup
+MIDlet-Version: 2.0.9
+MIDlet-Vendor: VNAPPS.COM
+MIDlet-Description: Email
+MIDlet-Jar-URL: MailStartup.jar
+MIDlet-Jar-Size: 0
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-1: EMail,res/icons/messages.png,
+RIM-MIDlet-Icon-1-1: res/icons/messages_roll.png,focused
+RIM-MIDlet-Icon-Count-1: 1
+RIM-MIDlet-Flags-1: 1

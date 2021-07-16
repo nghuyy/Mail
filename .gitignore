@@ -4,10 +4,8 @@
 *.debug
 *.jad
 *.jar
-*.rapc
 *.export.xml
 .idea
-*.files
 *.alx
 *.class
 *.mak
