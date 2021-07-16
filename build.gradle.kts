@@ -23,7 +23,7 @@ var warnkey = "warnkey=0x52424200;0x52525400;0x52435200"
 
 task("buildOS5") {
     doLast {
-        delete("build")
+        delete("build\\OS5")
         exec {
             commandLine = listOf(
                     "${api5_path}\\bin\\rapc.exe",
@@ -89,7 +89,7 @@ task("buildOS5") {
             commandLine = listOf(
                     "${api5_path}\\bin\\rapc.exe",
                     "-quiet",
-                    "codename=MailStartup\\EMail",
+                    "codename=build\\OS5\\EMail",
                     "MailStartup\\EMail.rapc",
                     warnkeyRelease,
                     "import=build\\OS5\\Mail.jar;build\\OS5\\MailOS46.jar;build\\OS5\\MailOS47.jar;build\\OS5\\MailOS5.jar;${api5_path}\\lib\\net_rim_api.jar",
@@ -101,7 +101,178 @@ task("buildOS5") {
     }
 }
 
+task("buildOS6") {
+    doLast {
+        delete("build\\OS6")
+        exec {
+            commandLine = listOf(
+                    "${api7_path}\\bin\\rapc.exe",
+                    "-quiet",
+                    "library=build\\OS6\\Mail",
+                    "Mail\\Mail.rapc",
+                    warnkeyRelease,
+                    "@Mail_build.files"
+            )
+        }
+        exec {
+            commandLine = listOf(
+                    "${api7_path}\\bin\\rapc.exe",
+                    "-quiet",
+                    "library=build\\OS6\\MailOS46",
+                    "MailOS46\\MailOS46.rapc",
+                    warnkeyRelease,
+                    "import=build\\OS6\\Mail.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "${folder}\\MailOS46\\src\\org\\logicprobe\\LogicMail\\PlatformInfoBB46.java",
+                    "${folder}\\MailOS46\\src\\org\\logicprobe\\LogicMail\\ui\\FieldFactoryBB46.java",
+                    "${folder}\\MailOS46\\src\\org\\logicprobe\\LogicMail\\ui\\NotificationHandlerBB46.java",
+                    "${folder}\\MailOS46\\src\\org\\logicprobe\\LogicMail\\util\\UtilFactoryBB46.java"
+            )
+        }
+
+        exec {
+            commandLine = listOf(
+                    "${api7_path}\\bin\\rapc.exe",
+                    "-quiet",
+                    "library=build\\OS6\\MailOS47",
+                    "MailOS47\\MailOS47.rapc",
+                    warnkeyRelease,
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\PlatformInfoBB47.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\FieldFactoryBB47.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\ScreenFactoryBB47.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\ShortcutBarButtonField.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\ShortcutBarManager.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\StandardTouchScreen.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\TouchMailHomeScreen.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\TouchNodeIcons.java",
+                    "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\TouchScreenTreeField.java"
+            )
+        }
+
+        exec {
+            commandLine = listOf(
+                    "${api7_path}\\bin\\rapc.exe",
+                    "-quiet",
+                    "library=build\\OS6\\MailOS5",
+                    "MailOS5\\MailOS5.rapc",
+                    warnkeyRelease,
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\PlatformInfoBB50.java",
+                    "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\ui\\FieldFactoryBB50.java",
+                    "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\ui\\ScreenFactoryBB50.java",
+                    "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\util\\NetworkConnectorBB50.java",
+                    "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\util\\UtilFactoryBB50.java"
+            )
+        }
+
+        exec {
+            commandLine = listOf(
+                    "${api7_path}\\bin\\rapc.exe",
+                    "-quiet",
+                    "library=build\\OS6\\MailOS6",
+                    "MailOS6\\MailOS6.rapc",
+                    warnkeyRelease,
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;build\\OS6\\MailOS5.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "${folder}\\MailOS6\\res\\icons\\go-bottom_32x32.png", 
+                    "${folder}\\MailOS6\\res\\icons\\go-next_32x32.png",
+                    "${folder}\\MailOS6\\res\\icons\\go-previous_32x32.png",
+                    "${folder}\\MailOS6\\res\\icons\\go-top_32x32.png",
+                    "${folder}\\MailOS6\\res\\icons\\message-mark-opened_32x32.png",
+                    "${folder}\\MailOS6\\res\\icons\\message-mark-unopened_32x32.png",
+                    "${folder}\\MailOS6\\res\\icons\\message-reply-all_32x32.png",
+                    "${folder}\\MailOS6\\res\\icons\\message-undelete_32x32.png",
+                    "${folder}\\MailOS6\\res\\icons\\messages.png",
+                    "${folder}\\MailOS6\\res\\icons\\messages_roll.png",
+                    "${folder}\\MailOS6\\res\\icons\\search_32x32.png",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\PlatformInfoBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\util\\UtilFactoryBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\BrowserField2Renderer.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\FieldFactoryBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\MailboxScreenBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\MessageActionsBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\NotificationHandlerBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\ScreenFactoryBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\StandardScreenBB60.java",
+                    "${folder}\\MailOS6\\src\\org\\logicprobe\\LogicMail\\ui\\StandardTouchScreenBB60.java"
+            )
+        }
+
+        exec {
+            commandLine = listOf(
+                    "${api7_path}\\bin\\rapc.exe",
+                    "-quiet",
+                    "codename=build\\OS6\\EMail",
+                    "MailStartup\\EMail.rapc",
+                    warnkeyRelease,
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;build\\OS6\\MailOS6.jar;build\\OS6\\MailOS6.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "${folder}\\MailStartup\\res\\icons\\messages.png",
+                    "${folder}\\MailStartup\\res\\icons\\messages_roll.png",
+                    "${folder}\\MailStartup\\src\\org\\logicprobe\\LogicMail\\MailStartup.java"
+            )
+        }
+    }
+}
+
+tasks.create("signSource6") {
+    delete("build/OS6/cache")
+    doLast {
+        exec {
+            commandLine("${jdk_path}\\javaw.exe",
+                    "-jar",
+                    "${api7_path}\\bin\\SignatureTool.jar",
+                    "-r",
+                    "${folder}/build/OS6"
+            )
+            workingDir(api7_path)
+        }
+        delete("${folder}/build/OS6/cache")
+    }
+}
+tasks.create<Copy>("copy6") {
+    dependsOn(tasks.getByName("signSource6"))
+    from("build/OS6")
+    into("build/OS6/cache")
+    include("*.cod", "*.jad")
+}
+
+task("Merge6") {
+    dependsOn(tasks.getByName("copy6"))
+    doLast {
+        Thread.sleep(2000)
+        exec {
+            commandLine(
+                    "${api7_path}\\bin\\UpdateJad.exe",
+                    "-n",
+                    "${folder}\\build\\OS6\\cache\\Email.jad",
+                    "${folder}\\build\\OS6\\cache\\Mail.jad",
+                    "${folder}\\build\\OS6\\cache\\MailOS5.jad",
+                    "${folder}\\build\\OS6\\cache\\MailOS46.jad",
+                    "${folder}\\build\\OS6\\cache\\MailOS47.jad",
+                    "${folder}\\build\\OS6\\cache\\MailOS6.jad"
+            )
+            workingDir("${folder}/build/OS6/cache")
+        }
+        delete("${folder}\\build\\OS6\\cache\\Mail.jad")
+        delete("${folder}\\build\\OS6\\cache\\MailOS5.jad")
+        delete("${folder}\\build\\OS6\\cache\\MailOS46.jad")
+        delete("${folder}\\build\\OS6\\cache\\MailOS47.jad")
+        delete("${folder}\\build\\OS6\\cache\\MailOS6.jad")
+    }
+}
+
+tasks.register<Zip>("zip6") {
+    dependsOn(tasks.getByName("Merge6"))
+    var jdp_text = File("MailStartup/MailStartup.jdp").readText(charset("utf-8"))
+    var version = jdp_text.split("Version=")[1].trim()
+    var DependsOn = "MailOS6" //jdp_text.split("[DependsOn\r\n")[1].trim().split("\r\n")[0]
+    archiveFileName.set("${DependsOn}-${version}.zip")
+    destinationDirectory.set(layout.projectDirectory.dir("build"))
+    from("${folder}/build/OS6/cache")
+}
+
+
 tasks.create("signSource") {
+    delete("build/OS5/cache")
     doLast {
         exec {
             commandLine("${jdk_path}\\javaw.exe",
@@ -123,15 +294,39 @@ tasks.create<Copy>("copy") {
     include("*.cod", "*.jad")
 }
 
-tasks.register<Zip>("zip") {
+task("Merge") {
     dependsOn(tasks.getByName("copy"))
+    doLast {
+        Thread.sleep(2000)
+        exec {
+            commandLine(
+                    "${api7_path}\\bin\\UpdateJad.exe",
+                    "-n",
+                    "${folder}\\build\\OS5\\cache\\Email.jad",
+                    "${folder}\\build\\OS5\\cache\\Mail.jad",
+                    "${folder}\\build\\OS5\\cache\\MailOS5.jad",
+                    "${folder}\\build\\OS5\\cache\\MailOS46.jad",
+                    "${folder}\\build\\OS5\\cache\\MailOS47.jad"
+            )
+            workingDir("${folder}/build/OS5/cache")
+        }
+        delete("${folder}\\build\\OS5\\cache\\Mail.jad")
+        delete("${folder}\\build\\OS5\\cache\\MailOS5.jad")
+        delete("${folder}\\build\\OS5\\cache\\MailOS46.jad")
+        delete("${folder}\\build\\OS5\\cache\\MailOS47.jad")
+    }
+}
+
+tasks.register<Zip>("zip") {
+    dependsOn(tasks.getByName("Merge"))
     var jdp_text = File("MailStartup/MailStartup.jdp").readText(charset("utf-8"))
     var version = jdp_text.split("Version=")[1].trim()
-    var DependsOn = jdp_text.split("[DependsOn\r\n")[1].trim().split("\r\n")[0]
+    var DependsOn = "MailOS5" //jdp_text.split("[DependsOn\r\n")[1].trim().split("\r\n")[0]
     archiveFileName.set("${DependsOn}-${version}.zip")
     destinationDirectory.set(layout.projectDirectory.dir("build"))
     from("${folder}/build/OS5/cache")
 }
+
 
 task("clean") {
     doLast {
