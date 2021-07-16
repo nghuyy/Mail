@@ -18,7 +18,7 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
-MailOS6
+MailOS5
 ]
 Description=Email
 ExcludeFromBuildAll=0

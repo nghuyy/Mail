@@ -51,7 +51,7 @@ import net.rim.device.api.ui.container.VerticalFieldManager;
  */
 public class HomeScreenPopup extends PopupScreen {
     private RichTextField licenseTextField;
-    private CheckboxField analyticsCheckboxField;
+    //private CheckboxField analyticsCheckboxField;
     private RichTextField acceptTextField;
     private RichTextField spacerField1;
     private RichTextField spacerField2;
@@ -79,10 +79,10 @@ public class HomeScreenPopup extends PopupScreen {
         spacerField1.setFont(font);
         spacerField1.setEditable(false);
         
-        analyticsCheckboxField = new CheckboxField(
-                LogicMailResource.ABOUT_ANALYTICS_ENABLE,
-                true);
-        analyticsCheckboxField.setFont(font);
+        //analyticsCheckboxField = new CheckboxField(
+        //        LogicMailResource.ABOUT_ANALYTICS_ENABLE,
+        //        true);
+        //analyticsCheckboxField.setFont(font);
         
         acceptTextField = new RichTextField(
                 LogicMailResource.ABOUT_LICENSE_ACCEPT,
@@ -107,7 +107,7 @@ public class HomeScreenPopup extends PopupScreen {
         
         add(licenseTextField);
         add(spacerField1);
-        add(analyticsCheckboxField);
+        //add(analyticsCheckboxField);
         add(spacerField2);
         add(acceptTextField);
         add(new SeparatorField());
@@ -129,7 +129,7 @@ public class HomeScreenPopup extends PopupScreen {
         return accepted;
     }
     
-    public boolean isAnalyticsEnabled() {
-        return analyticsCheckboxField.getChecked();
-    }
+    //public boolean isAnalyticsEnabled() {
+     //   return analyticsCheckboxField.getChecked();
+    //}
 }

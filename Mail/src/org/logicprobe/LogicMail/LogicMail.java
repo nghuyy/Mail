@@ -118,12 +118,10 @@ public final class LogicMail extends UiApplication {
     }
     
     public void activate() {
-        activateAnalytics();
         super.activate();
     }
     
     public void deactivate() {
-        deactivateAnalytics();
         super.deactivate();
     }
     
@@ -131,24 +129,7 @@ public final class LogicMail extends UiApplication {
         return foreground;
     }
 
-    private void activateAnalytics() {
-        if(AppInfo.isAnalyticsEnabled()) {
-            if(analyticsAppStartHappened) {
-                AnalyticsDataCollector.getInstance().onApplicationForeground();
-            }
-            else {
-                AnalyticsDataCollector.getInstance().onApplicationStart();
-                analyticsAppStartHappened = true;
-            }
-        }
-    }
 
-    private void deactivateAnalytics() {
-        if(AppInfo.isAnalyticsEnabled() && analyticsAppStartHappened) {
-            AnalyticsDataCollector.getInstance().onApplicationBackground();
-        }
-    }
-    
     private void runNormalStartup() {
         logStartupAppInfo();
         createLoadingScreen();
@@ -215,7 +196,7 @@ public final class LogicMail extends UiApplication {
                 else {
                     AppInfo.updateLastVersion();
                     AppInfo.setLicenseAccepted(true);
-                    AppInfo.setAnalyticsEnabled(popupDialog.isAnalyticsEnabled());
+                    AppInfo.setAnalyticsEnabled(false);
                     PermissionsHandler.checkStartupPermissions(true);
                     AnalyticsDataCollector.updateAnalyticsState();
                     foreground = true;
