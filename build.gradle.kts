@@ -34,6 +34,7 @@ task("buildOS5") {
                     "@Mail_build.files"
             )
         }
+
         exec {
             commandLine = listOf(
                     "${api5_path}\\bin\\rapc.exe",
@@ -98,6 +99,7 @@ task("buildOS5") {
                     "${folder}\\MailStartup\\src\\org\\logicprobe\\LogicMail\\MailStartup.java"
             )
         }
+
     }
 }
 
@@ -214,7 +216,6 @@ task("buildOS6") {
 }
 
 tasks.create("signSource6") {
-    delete("build/OS6/cache")
     doLast {
         exec {
             commandLine("${jdk_path}\\javaw.exe",
@@ -243,7 +244,7 @@ task("Merge6") {
             commandLine(
                     "${api7_path}\\bin\\UpdateJad.exe",
                     "-n",
-                    "${folder}\\build\\OS6\\cache\\Email.jad",
+                    "${folder}\\build\\OS6\\cache\\Email.jad.zip",
                     "${folder}\\build\\OS6\\cache\\Mail.jad",
                     "${folder}\\build\\OS6\\cache\\MailOS5.jad",
                     "${folder}\\build\\OS6\\cache\\MailOS46.jad",
@@ -272,7 +273,6 @@ tasks.register<Zip>("zip6") {
 
 
 tasks.create("signSource") {
-    delete("build/OS5/cache")
     doLast {
         exec {
             commandLine("${jdk_path}\\javaw.exe",
@@ -302,7 +302,7 @@ task("Merge") {
             commandLine(
                     "${api7_path}\\bin\\UpdateJad.exe",
                     "-n",
-                    "${folder}\\build\\OS5\\cache\\Email.jad",
+                    "${folder}\\build\\OS5\\cache\\Email.jad.zip",
                     "${folder}\\build\\OS5\\cache\\Mail.jad",
                     "${folder}\\build\\OS5\\cache\\MailOS5.jad",
                     "${folder}\\build\\OS5\\cache\\MailOS46.jad",
@@ -327,6 +327,51 @@ tasks.register<Zip>("zip") {
     from("${folder}/build/OS5/cache")
 }
 
+tasks.register("Release") {
+    doLast {
+        delete("dist")
+        exec {
+            commandLine = listOf("git", "clone", "git@github.com:nghuyy/BlackberryMail_Release.git", "dist")
+        }
+        copy {
+            from("build/")
+            into("dist/")
+            include("*.zip")
+        }
+        copy {
+            from("build/OS5/cache")
+            into("dist/OS5")
+            include("*.cod", "*.jad")
+            exclude ("Mail.cod")
+        }
+        copy {
+            from("build/OS6/cache")
+            into("dist/OS6")
+            include("*.cod", "*.jad")
+            exclude ("Mail.cod")
+        }
+        copy{
+            from(zipTree("build/OS5/cache/Mail.cod"))
+            into("dist/OS5")
+        }
+        copy{
+            from(zipTree("build/OS6/cache/Mail.cod"))
+            into("dist/OS6")
+        }
+        exec {
+            workingDir = File("./dist")
+            commandLine = listOf("git", "add", ".")
+        }
+        exec {
+            workingDir = File("./dist")
+            commandLine = listOf("git", "commit", "-m", "\"Update\"")
+        }
+        exec {
+            workingDir = File("./dist")
+            commandLine = listOf("git", "push", "-f", "origin", "main")
+        }
+    }
+}
 
 task("clean") {
     doLast {
