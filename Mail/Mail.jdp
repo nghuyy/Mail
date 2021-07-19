@@ -24,6 +24,9 @@ ExcludeFromBuildAll=0
 Exported=0
 [Files
 res\icons\account_local.png
+res\icons\blackberryemail.png
+res\icons\blackberryemail_roll.png
+res\icons\account_local.png
 res\icons\account_local_32x32.png
 res\icons\account_network_offline.png
 res\icons\account_network_offline_32x32.png
@@ -388,7 +391,7 @@ HaveAlxImports=0
 HaveDefs=0
 HaveImports=0
 [Icons
-res\icons\messages.png
+res\icons\blackberryemail.png
 ]
 [ImplicitRules
 ]
@@ -401,7 +404,7 @@ OutputFileName=Mail
 ]
 RibbonPosition=0
 [RolloverIcons
-res\icons\messages_roll.png
+res\icons\blackberryemail_roll.png
 ]
 RunOnStartup=0
 SkipCompile=0
@@ -409,4 +412,4 @@ StartupTier=7
 SystemModule=0
 Type=2
 Vendor=VNAPPS
-Version=2.0.9
+Version=2.0.10

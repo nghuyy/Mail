@@ -24,8 +24,6 @@ Description=Email
 ExcludeFromBuildAll=0
 Exported=0
 [Files
-res\icons\blackberryemail.png
-res\icons\blackberryemail_roll.png
 res\icons\messages.png
 res\icons\messages_roll.png
 src\org\logicprobe\LogicMail\MailStartup.java
@@ -34,7 +32,7 @@ HaveAlxImports=0
 HaveDefs=0
 HaveImports=0
 [Icons
-res\icons\blackberryemail.png
+res\icons\messages.png
 ]
 [ImplicitRules
 ]
@@ -47,7 +45,7 @@ OutputFileName=EMail
 ]
 RibbonPosition=0
 [RolloverIcons
-res\icons\blackberryemail_roll.png
+res\icons\messages_roll.png
 ]
 RunOnStartup=1
 SkipCompile=0
@@ -56,4 +54,4 @@ SystemModule=0
 Title=EMail
 Type=0
 Vendor=VNAPPS.COM
-Version=2.0.12
+Version=2.0.14

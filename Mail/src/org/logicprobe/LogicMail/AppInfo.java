@@ -48,10 +48,10 @@ public final class AppInfo {
     private static PersistentObject store;
     private static PersistableAppInfo persistableInfo;
     
-    private static final Bitmap icon = Bitmap.getBitmapResource("messages.png");
-    private static final Bitmap rolloverIcon = Bitmap.getBitmapResource("messages_roll.png");
-    private static final Bitmap newMessagesIcon = Bitmap.getBitmapResource("messages_new.png");
-    private static final Bitmap newMessagesRolloverIcon = Bitmap.getBitmapResource("messages_new_roll.png");
+    private static final Bitmap icon = Bitmap.getBitmapResource("blackberryemail.png");
+    private static final Bitmap rolloverIcon = Bitmap.getBitmapResource("blackberryemail_roll.png");
+    private static final Bitmap newMessagesIcon = Bitmap.getBitmapResource("blackberryemailnew.png");
+    private static final Bitmap newMessagesRolloverIcon = Bitmap.getBitmapResource("blackberryemailnew_roll.png");
     private static String PARAM_RELEASE = "-release";
     private static String appName;
     private static String appVersion;
