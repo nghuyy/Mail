@@ -302,7 +302,7 @@ task("Merge") {
             commandLine(
                     "${api7_path}\\bin\\UpdateJad.exe",
                     "-n",
-                    "${folder}\\build\\OS5\\cache\\Email.jad.zip",
+                    "${folder}\\build\\OS5\\cache\\Email.jad",
                     "${folder}\\build\\OS5\\cache\\Mail.jad",
                     "${folder}\\build\\OS5\\cache\\MailOS5.jad",
                     "${folder}\\build\\OS5\\cache\\MailOS46.jad",
