@@ -1,8 +1,15 @@
 defaultTasks(
         "clean",
+        "setupOS5",
         "buildOS5",
-        "zip"
+        "zip",
+        "setupOS6",
+        "buildOS6",
+        "zip6",
+        "Release"
 )
+
+var localVersion = "1.1.17"
 
 var bb_buildfile = listOf<String>(
         "**/*.cod",
@@ -21,9 +28,34 @@ var jdk_path = "C:\\Program Files (x86)\\Java\\jdk1.5.0_22\\bin"
 var warnkeyRelease = "warnkey=0x52424200;0x52525400;0x5242534b;0x42424944;0x52435200;0x4e464352;0x52455345"
 var warnkey = "warnkey=0x52424200;0x52525400;0x52435200"
 
+
+task("setupOS5"){
+    doLast{
+        var filesStr = "import=${api5_path}\\lib\\net_rim_api.jar\n"
+        project.fileTree("Mail/src").filter { it.isFile() }.files.forEach {
+            filesStr += it.path + "\n"
+        }
+        project.fileTree("Mail/res").filter { it.isFile() }.files.forEach {
+            filesStr += it.path + "\n"
+        }
+        File("Mail.files").writeText(filesStr,charset("utf-8"))
+    }
+}
+task("setupOS6"){
+    doLast{
+        var filesStr = "import=${api7_path}\\lib\\net_rim_api.jar\n"
+        project.fileTree("Mail/src").filter { it.isFile() }.files.forEach {
+            filesStr += it.path + "\n"
+        }
+        project.fileTree("Mail/res").filter { it.isFile() }.files.forEach {
+            filesStr += it.path + "\n"
+        }
+        File("Mail.files").writeText(filesStr,charset("utf-8"))
+    }
+}
+
 task("buildOS5") {
     doLast {
-        delete("build\\OS5")
         exec {
             commandLine = listOf(
                     "${api5_path}\\bin\\rapc.exe",
@@ -31,7 +63,7 @@ task("buildOS5") {
                     "library=build\\OS5\\Mail",
                     "Mail\\Mail.rapc",
                     warnkeyRelease,
-                    "@Mail_build.files"
+                    "@Mail.files"
             )
         }
 
@@ -105,7 +137,6 @@ task("buildOS5") {
 
 task("buildOS6") {
     doLast {
-        delete("build\\OS6")
         exec {
             commandLine = listOf(
                     "${api7_path}\\bin\\rapc.exe",
@@ -113,7 +144,7 @@ task("buildOS6") {
                     "library=build\\OS6\\Mail",
                     "Mail\\Mail.rapc",
                     warnkeyRelease,
-                    "@Mail_build.files"
+                    "@Mail.files"
             )
         }
         exec {
@@ -277,11 +308,11 @@ tasks.create("signSource") {
         exec {
             commandLine("${jdk_path}\\javaw.exe",
                     "-jar",
-                    "${api7_path}\\bin\\SignatureTool.jar",
+                    "${api5_path}\\bin\\SignatureTool.jar",
                     "-r",
                     "${folder}/build/OS5"
             )
-            workingDir(api7_path)
+            workingDir(api5_path)
         }
         delete("${folder}/build/OS5/cache")
     }
@@ -300,7 +331,7 @@ task("Merge") {
         Thread.sleep(2000)
         exec {
             commandLine(
-                    "${api7_path}\\bin\\UpdateJad.exe",
+                    "${api5_path}\\bin\\UpdateJad.exe",
                     "-n",
                     "${folder}\\build\\OS5\\cache\\Email.jad",
                     "${folder}\\build\\OS5\\cache\\Mail.jad",
@@ -338,26 +369,31 @@ tasks.register("Release") {
             into("dist/")
             include("*.zip")
         }
-        copy {
-            from("build/OS5/cache")
-            into("dist/OS5")
-            include("*.cod", "*.jad")
-            exclude ("Mail.cod")
+        if(File("build/OS6/cache").exists()) {
+            copy {
+                from("build/OS5/cache")
+                into("dist/OS5")
+                include("*.cod", "*.jad")
+                exclude("Mail.cod")
+            }
+            copy {
+                from(zipTree("build/OS5/cache/Mail.cod"))
+                into("dist/OS5")
+            }
         }
-        copy {
-            from("build/OS6/cache")
-            into("dist/OS6")
-            include("*.cod", "*.jad")
-            exclude ("Mail.cod")
+        if(File("build/OS6/cache").exists()) {
+            copy {
+                from("build/OS6/cache")
+                into("dist/OS6")
+                include("*.cod", "*.jad")
+                exclude("Mail.cod")
+            }
+            copy {
+                from(zipTree("build/OS6/cache/Mail.cod"))
+                into("dist/OS6")
+            }
         }
-        copy{
-            from(zipTree("build/OS5/cache/Mail.cod"))
-            into("dist/OS5")
-        }
-        copy{
-            from(zipTree("build/OS6/cache/Mail.cod"))
-            into("dist/OS6")
-        }
+
         exec {
             workingDir = File("./dist")
             commandLine = listOf("git", "add", ".")
@@ -375,8 +411,7 @@ tasks.register("Release") {
 
 task("clean") {
     doLast {
-        delete("build/OS5")
-        delete("build/OS6")
+        delete("build")
         delete(fileTree("Mail").matching {
             include(bb_buildfile)
         })

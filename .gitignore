@@ -16,4 +16,5 @@ gradlew.bat
 dist/
 build/
 /dist/
+*.files
 **/*~
