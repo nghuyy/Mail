@@ -207,8 +207,8 @@ task("buildOS6") {
                     "MailStartup\\EMail.rapc",
                     warnkeyRelease,
                     "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;build\\OS6\\MailOS6.jar;build\\OS6\\MailOS6.jar;${api7_path}\\lib\\net_rim_api.jar",
-                    "${folder}\\MailStartup\\res\\icons\\messages.png",
-                    "${folder}\\MailStartup\\res\\icons\\messages_roll.png",
+                    "${folder}\\MailStartup\\res\\icons\\blackberryemail.png",
+                    "${folder}\\MailStartup\\res\\icons\\blackberryemail_roll.png",
                     "${folder}\\MailStartup\\src\\org\\logicprobe\\LogicMail\\MailStartup.java"
             )
         }
@@ -244,7 +244,7 @@ task("Merge6") {
             commandLine(
                     "${api7_path}\\bin\\UpdateJad.exe",
                     "-n",
-                    "${folder}\\build\\OS6\\cache\\Email.jad.zip",
+                    "${folder}\\build\\OS6\\cache\\Email.jad",
                     "${folder}\\build\\OS6\\cache\\Mail.jad",
                     "${folder}\\build\\OS6\\cache\\MailOS5.jad",
                     "${folder}\\build\\OS6\\cache\\MailOS46.jad",
