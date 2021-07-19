@@ -126,10 +126,8 @@ public class MessageActionsBB60 extends MessageActions {
         };
         contextDeleteItem = new MenuItem( LogicMailResource.MENUITEM_DELETE, 400190, 2000) {
             public void run() {
+                //press delete touch menu when mail list screen
                 deleteMessage(activeMessageNode);
-                String scr =UiApplication.getUiApplication().getActiveScreen().getClass().toString();
-                Dialog.alert(scr+ "MSG ActionBB60");
-                UiApplication.getUiApplication().getActiveScreen().close();
             }
         };
         contextUndeleteItem = new MenuItem(LogicMailResource.MENUITEM_UNDELETE, 400200, 2000) {

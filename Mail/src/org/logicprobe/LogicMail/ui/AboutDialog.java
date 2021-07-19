@@ -7,10 +7,10 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution. 
+ *    documentation and/or other materials provided with the distribution.
  * 3. Neither the name of the project nor the names of its
  *    contributors may be used to endorse or promote products derived
  *    from this software without specific prior written permission.
@@ -49,8 +49,8 @@ public class AboutDialog extends Dialog {
     public AboutDialog() {
         super(
                 LogicMailResource.ABOUT_TITLE + ' ' + AppInfo.getName(),
-                new Object[] { LogicMailResource.MENUITEM_CLOSE },
-                new int[] { Dialog.OK },
+                new Object[]{LogicMailResource.MENUITEM_CLOSE},
+                new int[]{Dialog.OK},
                 Dialog.OK,
                 Bitmap.getBitmapResource("logicmail.png"));
         setEscapeEnabled(true);
@@ -62,49 +62,39 @@ public class AboutDialog extends Dialog {
         buf.append(AppInfo.getName());
         buf.append(' ');
         buf.append(AppInfo.getVersion());
-        if(AppInfo.isRelease()) {
-            String moniker = AppInfo.getVersionMoniker();
-            if(moniker != null && moniker.length() > 0) {
-                buf.append(" (");
-                buf.append(moniker);
-                buf.append(')');
-            }
-        }
-        else {
-            buf.append(" (dev)");
-        }
-        
+        buf.append(" (release)");
+
         LabelField nameLabelField = new LabelField(buf.toString(), Field.FIELD_HCENTER);
         LabelField urlLabelField = new LabelField(LogicMailResource.ABOUT_URL, Field.FIELD_HCENTER);
 
         LabelField licenseLabelField = new LabelField(LogicMailResource.ABOUT_LICENSE);
         licenseLabelField.setFont(Font.getDefault().derive(Font.PLAIN, 6, Ui.UNITS_pt));
-        
+
         add(new SeparatorField());
         add(nameLabelField);
         add(urlLabelField);
         add(licenseLabelField);
         add(new SeparatorField());
     }
-    
+
     protected boolean openDevelopmentBackdoor(int backdoorCode) {
-        switch( backdoorCode ) {
-        case BACKDOOR_RST:
-            backdoorRST();
-            return true;
+        switch (backdoorCode) {
+            case BACKDOOR_RST:
+                backdoorRST();
+                return true;
         }
         return super.openDevelopmentBackdoor(backdoorCode);
     }
 
     protected boolean openProductionBackdoor(int backdoorCode) {
-        switch( backdoorCode ) {
-        case BACKDOOR_RST:
-            backdoorRST();
-            return true;
+        switch (backdoorCode) {
+            case BACKDOOR_RST:
+                backdoorRST();
+                return true;
         }
         return super.openProductionBackdoor(backdoorCode);
     }
-    
+
     private void backdoorRST() {
         AppInfo.resetPersistableInfo();
         UiApplication.getUiApplication().invokeLater(new Runnable() {

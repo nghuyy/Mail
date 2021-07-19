@@ -52,11 +52,8 @@ public final class AppInfo {
     private static final Bitmap rolloverIcon = Bitmap.getBitmapResource("blackberryemail_roll.png");
     private static final Bitmap newMessagesIcon = Bitmap.getBitmapResource("blackberryemailnew.png");
     private static final Bitmap newMessagesRolloverIcon = Bitmap.getBitmapResource("blackberryemailnew_roll.png");
-    private static String PARAM_RELEASE = "-release";
     private static String appName;
     private static String appVersion;
-    private static boolean release;
-    private static String appVersionMoniker;
     private static PlatformInfo platformInfo;
     
     static {
@@ -97,20 +94,6 @@ public final class AppInfo {
         appName = appDesc.getName();
         appVersion = appDesc.getVersion();
         platformInfo = PlatformInfo.getInstance();
-        
-        // Parse the command-line argument list
-        for(int i=0; i<args.length; i++) {
-            int p = args[i].indexOf(PARAM_RELEASE);
-            if(p != -1) {
-                release = true;
-                p = args[i].indexOf(':', p + PARAM_RELEASE.length());
-                if(p != -1 && p < args[i].length() - 1) {
-                    int q = args[i].indexOf(' ', p);
-                    if(q == -1) { q = args[i].length(); }
-                    appVersionMoniker = args[i].substring(p + 1, q);
-                }
-            }
-        }
     }
     
     public static String getName() {
@@ -121,17 +104,12 @@ public final class AppInfo {
         return appVersion;
     }
     
-    public static String getVersionMoniker() {
-        return appVersionMoniker;
-    }
-    
+
     public static String getPlatformVersion() {
         return platformInfo.getPlatformVersion();
     }
     
-    public static boolean isRelease() {
-        return release;
-    }
+
     
     public static Bitmap getIcon() {
         return icon;

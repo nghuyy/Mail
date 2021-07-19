@@ -494,9 +494,7 @@ public class ConfigScreen extends AbstractConfigScreen {
         clearCacheManager.add(clearCacheLabelField);
         clearCacheManager.add(clearCacheButtonField);
 
-        analyticsCheckboxField = new CheckboxField(
-                LogicMailResource.ABOUT_ANALYTICS_ENABLE,
-                AppInfo.isAnalyticsEnabled());
+
         
         otherFieldManager.add(new LabeledSeparatorField(
                 LogicMailResource.CONFIG_GLOBAL_SECTION_OTHER,
@@ -509,9 +507,7 @@ public class ConfigScreen extends AbstractConfigScreen {
         otherFieldManager.add(clearCacheManager);
         
         // Locale override is not used in release builds
-        if(!AppInfo.isRelease()) {
-            otherFieldManager.add(languageChoiceField);
-        }
+        otherFieldManager.add(languageChoiceField);
         otherFieldManager.add(unicodeNormalizationCheckboxField);
         otherFieldManager.add(connectionDebuggingCheckboxField);
 

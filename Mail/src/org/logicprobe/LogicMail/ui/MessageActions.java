@@ -160,8 +160,7 @@ public class MessageActions {
         deleteItem = new MenuItem(LogicMailResource.MENUITEM_DELETE, 400170, 2000) {
             public void run() {
                 deleteMessage(activeMessageNode);
-                String scr = UiApplication.getUiApplication().getActiveScreen().getClass().toString();
-                Dialog.alert(scr+ "MSG ActionRoot");
+                //press delete inside mail view
                 UiApplication.getUiApplication().getActiveScreen().close();
             }
         };

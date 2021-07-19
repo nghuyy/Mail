@@ -7,10 +7,10 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution. 
+ *    documentation and/or other materials provided with the distribution.
  * 3. Neither the name of the project nor the names of its
  *    contributors may be used to endorse or promote products derived
  *    from this software without specific prior written permission.
@@ -91,13 +91,13 @@ public final class LogicMail extends UiApplication {
 
     /**
      * Instantiates a new instance of the application.
-     * 
+     *
      * @param args arguments passed to the application's <code>main()</code> method
      */
     public LogicMail(String[] args) {
-        for(int i=0; i<args.length; i++) {
-            if(args[i].indexOf("autostartup") != -1) {
-                autoStart = true;    			
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].indexOf("autostartup") != -1) {
+                autoStart = true;
             }
         }
         AppInfo.initialize(args);
@@ -108,23 +108,22 @@ public final class LogicMail extends UiApplication {
      */
     public void run() {
         PermissionsHandler.registerReasonProvider();
-        if(autoStart) {
+        if (autoStart) {
             runAutoStartup();
-        }
-        else {
+        } else {
             runNormalStartup();
         }
         enterEventDispatcher();
     }
-    
+
     public void activate() {
         super.activate();
     }
-    
+
     public void deactivate() {
         super.deactivate();
     }
-    
+
     protected boolean acceptsForeground() {
         return foreground;
     }
@@ -134,11 +133,10 @@ public final class LogicMail extends UiApplication {
         logStartupAppInfo();
         createLoadingScreen();
         checkForVersionIncrease();
-        
-        if(AppInfo.isLicenceAccepted()) {
+
+        if (AppInfo.isLicenceAccepted()) {
             beginNormalStartup(true);
-        }
-        else {
+        } else {
             showLicenseDialog();
         }
     }
@@ -147,23 +145,23 @@ public final class LogicMail extends UiApplication {
         logStartupAppInfo();
         beginNormalStartup(false);
     }
-    
+
     private void checkForVersionIncrease() {
-        if(!AppInfo.getVersion().equals(AppInfo.getLastVersion())) {
+        if (!AppInfo.getVersion().equals(AppInfo.getLastVersion())) {
             AppInfo.setLicenseAccepted(false);
         }
     }
 
     private void beginNormalStartup(boolean runInForeground) {
         // First check to see if we have an already-running instance
-        if(runInForeground) {
+        if (runInForeground) {
             tryRequestForground();
         }
-        
+
         foreground = true;
         PermissionsHandler.checkStartupPermissions(false);
         AnalyticsDataCollector.getInstance().setConfigured(AppInfo.isAnalyticsEnabled());
-        if(runInForeground) {
+        if (runInForeground) {
             requestForeground();
             pushScreen(loadingScreen);
         }
@@ -173,12 +171,13 @@ public final class LogicMail extends UiApplication {
     private void tryRequestForground() {
         try {
             UiApplication applicationInstance =
-                LogicMailRuntimeState.getInstance().getApplicationInstance();
-            if(applicationInstance != null) {
+                    LogicMailRuntimeState.getInstance().getApplicationInstance();
+            if (applicationInstance != null) {
                 applicationInstance.requestForeground();
                 System.exit(0);
             }
-        } catch (ControlledAccessException e) { }
+        } catch (ControlledAccessException e) {
+        }
     }
 
     private void showLicenseDialog() {
@@ -188,12 +187,11 @@ public final class LogicMail extends UiApplication {
                 HomeScreenPopup popupDialog = new HomeScreenPopup();
                 pushGlobalScreen(popupDialog, 1, UiEngine.GLOBAL_MODAL);
 
-                if(!popupDialog.isLicenseAccepted()) {
+                if (!popupDialog.isLicenseAccepted()) {
                     PermissionsHandler.unregisterReasonProvider();
                     LogicMailRuntimeState.getInstance().setApplicationInstance(null);
                     System.exit(0);
-                }
-                else {
+                } else {
                     AppInfo.updateLastVersion();
                     AppInfo.setLicenseAccepted(true);
                     AppInfo.setAnalyticsEnabled(false);
@@ -229,9 +227,11 @@ public final class LogicMail extends UiApplication {
                 // Explicitly trigger a refresh of the local data location, just in
                 // case the file system appeared before we registered the listeners.
                 MailSettings.getInstance().simulateGlobalDataChange();
-                
+
                 showMailHomeScreen();
-            };
+            }
+
+            ;
         };
         loadingThread.start();
     }
@@ -244,14 +244,12 @@ public final class LogicMail extends UiApplication {
 
     private void setDefaultLocale() {
         // Locale override is not used in release builds
-        if(!AppInfo.isRelease()) {
-            // Set the language, if configured
-            String languageCode =
+        String languageCode =
                 MailSettings.getInstance().getGlobalConfig().getLanguageCode();
-            if(languageCode != null && languageCode.length() > 0) {
-                try {
-                    Locale.setDefault(Locale.get(languageCode));
-                } catch (Exception e) { }
+        if (languageCode != null && languageCode.length() > 0) {
+            try {
+                Locale.setDefault(Locale.get(languageCode));
+            } catch (Exception e) {
             }
         }
     }
@@ -263,14 +261,14 @@ public final class LogicMail extends UiApplication {
         } catch (ControlledAccessException e) {
             // Don't fail if file permissions are denied
         }
-        
+
         // Add any sensor listeners
         try {
             UtilFactory.getInstance().addSensorListeners();
         } catch (ControlledAccessException e) {
             // Don't fail if permissions are denied
         }
-        
+
         // Add the system listener for handling power-related events
         try {
             addSystemListener(MailManager.getInstance().getSystemListener());
@@ -285,7 +283,7 @@ public final class LogicMail extends UiApplication {
                 // Push the mail home screen and pop
                 // the loading screen
                 navigationController.displayMailHome();
-                if(loadingScreen != null) {
+                if (loadingScreen != null) {
                     popScreen(loadingScreen);
                     loadingScreen = null;
                 }
@@ -293,10 +291,10 @@ public final class LogicMail extends UiApplication {
             }
         });
     }
-    
+
     private void logStartupAppInfo() {
         // Log application startup information
-        if(EventLogger.getMinimumLevel() >= EventLogger.INFORMATION) {
+        if (EventLogger.getMinimumLevel() >= EventLogger.INFORMATION) {
             StringBuffer buf = new StringBuffer();
             buf.append("Application startup\r\n");
             buf.append("Date: ");
@@ -312,7 +310,7 @@ public final class LogicMail extends UiApplication {
             buf.append(DeviceInfo.getDeviceName());
             buf.append(' ');
             buf.append(AppInfo.getPlatformVersion());
-            if(PlatformInfo.getInstance().hasTouchscreen()) {
+            if (PlatformInfo.getInstance().hasTouchscreen()) {
                 buf.append(' ');
                 buf.append("(touch)");
             }
@@ -330,14 +328,16 @@ public final class LogicMail extends UiApplication {
         int throbberSize = displayWidth / 4;
         int fontHeight = Font.getDefault().getHeight();
         int spacerSize = (displayHeight / 2) - ((splashLogo.getHeight() + throbberSize + fontHeight) / 2) - fieldSpacerSize;
-        if(spacerSize < 0) { spacerSize = 0; }
+        if (spacerSize < 0) {
+            spacerSize = 0;
+        }
 
         loadingScreen.add(new BlankSeparatorField(spacerSize));
         loadingScreen.add(new BitmapField(splashLogo, Field.FIELD_HCENTER));
         loadingScreen.add(new BlankSeparatorField(fieldSpacerSize));
         loadingScreen.add(new ThrobberField(throbberSize, Field.FIELD_HCENTER));
         loadingScreen.add(new BlankSeparatorField(fieldSpacerSize));
-        
+
         StringBuffer buf = new StringBuffer();
         buf.append("Version ");
         appendAppVersion(buf);
@@ -345,20 +345,9 @@ public final class LogicMail extends UiApplication {
     }
 
     private static void appendAppVersion(StringBuffer buf) {
-        buf.append(AppInfo.getVersion());
-        if(AppInfo.isRelease()) {
-            String moniker = AppInfo.getVersionMoniker();
-            if(moniker != null && moniker.length() > 0) {
-                buf.append(" (");
-                buf.append(moniker);
-                buf.append(')');
-            }
-        }
-        else {
-            buf.append(" (dev)");
-        }
+        buf.append(" (release)");
     }
-    
+
     /**
      * Complete the application shutdown process by unregistering any static
      * listeners and exiting the application process.
@@ -371,33 +360,32 @@ public final class LogicMail extends UiApplication {
         } catch (ControlledAccessException e) {
             // Don't fail if permissions are denied
         }
-        
+
         try {
             UtilFactory.getInstance().removeSensorListeners();
         } catch (ControlledAccessException e) {
             // Don't fail if permissions are denied
         }
-        
+
         try {
             FileSystemRegistry.removeFileSystemListener(MailSettings.getInstance().getFileSystemListener());
         } catch (ControlledAccessException e) {
             // Don't fail if file permissions are denied
         }
-        
+
         PermissionsHandler.unregisterReasonProvider();
         LogicMailRuntimeState.getInstance().setApplicationInstance(null);
-        
+
         AnalyticsDataCollector.getInstance().onApplicationTerminate();
-        
+
         System.exit(0);
     }
 
     private void runAutoStartup() {
-        if(ApplicationManager.getApplicationManager().inStartup()) {
+        if (ApplicationManager.getApplicationManager().inStartup()) {
             systemListener = new StartupSystemListener();
             this.addSystemListener(systemListener);
-        }
-        else {
+        } else {
             invokeLater(new Runnable() {
                 public void run() {
                     startupInitialization();
@@ -405,35 +393,43 @@ public final class LogicMail extends UiApplication {
             });
         }
     }
-    
+
     private class StartupSystemListener implements SystemListener {
         public void powerUp() {
             removeSystemListener(systemListener);
             startupInitialization();
         }
-        
-        public void powerOff() { }
-        public void batteryGood() { }
-        public void batteryLow() { }
-        public void batteryStatusChange(int status) { }
+
+        public void powerOff() {
+        }
+
+        public void batteryGood() {
+        }
+
+        public void batteryLow() {
+        }
+
+        public void batteryStatusChange(int status) {
+        }
     }
-    
+
     private void startupInitialization() {
         // The BlackBerry has finished its startup process
 
         MailSettings mailSettings = null;
         boolean initialized = false;
         try {
-            if(!LogicMailRuntimeState.removeInstance()) {
+            if (!LogicMailRuntimeState.removeInstance()) {
                 // Configure the rollover icons
                 HomeScreen.updateIcon(AppInfo.getIcon(), 0);
                 HomeScreen.setRolloverIcon(AppInfo.getRolloverIcon(), 0);
-                
+
                 try {
                     HomeScreen.updateIcon(AppInfo.getIcon(), 1);
                     HomeScreen.setRolloverIcon(AppInfo.getRolloverIcon(), 1);
-                } catch (IllegalArgumentException e) { }
-                
+                } catch (IllegalArgumentException e) {
+                }
+
                 // Register for synchronization
                 SyncManager.getInstance().enableSynchronization(LogicMailSyncCollection.getInstance());
             }
@@ -441,26 +437,25 @@ public final class LogicMail extends UiApplication {
             // Load application settings
             mailSettings = MailSettings.getInstance();
             mailSettings.loadSettings();
-            
+
             LogicMailRuntimeState runtimeState = LogicMailRuntimeState.getInstance();
-            
+
             configureNotificationSources(runtimeState, mailSettings);
-    
+
             initialized = true;
         } catch (ControlledAccessException e) {
             // If permissions have not been granted, we may get here
         }
 
         checkForVersionIncrease();
-        
-        if(initialized
+
+        if (initialized
                 && AppInfo.isLicenceAccepted()
                 && mailSettings != null
                 && mailSettings.getGlobalConfig().isAutoStartupEnabled()) {
             LogicMailRuntimeState.getInstance().setApplicationInstance(this);
             runBackgroundStartup();
-        }
-        else {
+        } else {
             // Exit the application.
             PermissionsHandler.unregisterReasonProvider();
             LogicMailRuntimeState.getInstance().setApplicationInstance(null);
@@ -471,10 +466,10 @@ public final class LogicMail extends UiApplication {
     private static void configureNotificationSources(LogicMailRuntimeState runtimeState, MailSettings mailSettings) {
         // Configure a notification source for each account
         int numAccounts = mailSettings.getNumAccounts();
-        for(int i=0; i<numAccounts; i++) {
+        for (int i = 0; i < numAccounts; i++) {
             AccountConfig accountConfig = mailSettings.getAccountConfig(i);
             LogicMailEventSource eventSource =
-                new LogicMailEventSource(accountConfig.getAcctName(), accountConfig.getUniqueId());
+                    new LogicMailEventSource(accountConfig.getAcctName(), accountConfig.getUniqueId());
             NotificationsManager.registerSource(
                     eventSource.getEventSourceId(),
                     eventSource,

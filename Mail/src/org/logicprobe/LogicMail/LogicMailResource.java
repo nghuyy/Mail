@@ -3,11 +3,10 @@ package org.logicprobe.LogicMail;
 public class LogicMailResource {
 	public static final String CONFIG_OUTGOING_TITLE = "Outgoing (SMTP)";
 	public static final String APPNAME  = "Mail";
-	public static final String ABOUT_ANALYTICS_ENABLE  = "Enable anonymous usage data collection";
-	public static final String ABOUT_LICENSE="LogicMail is Copyright © 2006-2012, Derek Konigsberg.  All rights reserved.";
+	public static final String ABOUT_LICENSE="Email for BBOS is Copyright © 2021";
 	public static final String ABOUT_LICENSE_ACCEPT="Click \"Accept\" to accept the terms of the license agreement, or \"Decline\" to decline the agreement and exit LogicMail.";
 	public static final String ABOUT_TITLE="About";
-	public static final String ABOUT_URL="http://logicmail.org/";
+	public static final String ABOUT_URL="http://vnapps.com/BBOS/BlackberryMail_Release/";
 
     public static final String ACCOUNT_LOCAL_FOLDERS="Local Folders";
 	public static final String BASE_CLOSEANDEXIT="Close active connections and exit?";

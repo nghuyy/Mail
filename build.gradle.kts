@@ -24,10 +24,17 @@ var folder = project.projectDir
 var api5_path = "C:\\Program Files (x86)\\Research In Motion\\BlackBerry JDE 5.0.0"
 var api7_path = "C:\\Program Files (x86)\\Research In Motion\\BlackBerry JDE 7.1.0"
 var jdk_path = "C:\\Program Files (x86)\\Java\\jdk1.5.0_22\\bin"
-
 var warnkeyRelease = "warnkey=0x52424200;0x52525400;0x5242534b;0x42424944;0x52435200;0x4e464352;0x52455345"
 var warnkey = "warnkey=0x52424200;0x52525400;0x52435200"
+var packID = "blackberry.sig"
+var passwordPath = rootProject.file(System.getProperty("user.home") + "/.gradle/.keystore").readText(charset("utf-8"))
+var password = rootProject.file("${passwordPath}\\${packID}").readText(charset("utf-8"))
 
+task("testPass"){
+    doLast{
+        println(password)
+    }
+}
 
 task("setupOS5"){
     doLast{
@@ -252,6 +259,9 @@ tasks.create("signSource6") {
             commandLine("${jdk_path}\\javaw.exe",
                     "-jar",
                     "${api7_path}\\bin\\SignatureTool.jar",
+                    "-a",
+                    "-p",
+                    password,
                     "-r",
                     "${folder}/build/OS6"
             )
@@ -309,6 +319,9 @@ tasks.create("signSource") {
             commandLine("${jdk_path}\\javaw.exe",
                     "-jar",
                     "${api5_path}\\bin\\SignatureTool.jar",
+                    "-a",
+                    "-p",
+                    password,
                     "-r",
                     "${folder}/build/OS5"
             )
