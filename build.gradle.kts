@@ -1,5 +1,6 @@
 defaultTasks(
         "clean",
+        "setupVersion",
         "setupOS5",
         "buildOS5",
         "zip",
@@ -9,7 +10,7 @@ defaultTasks(
         "Release"
 )
 
-var localVersion = "1.1.17"
+var localVersion = "2.0.19"
 
 var bb_buildfile = listOf<String>(
         "**/*.cod",
@@ -30,14 +31,28 @@ var packID = "blackberry.sig"
 var passwordPath = rootProject.file(System.getProperty("user.home") + "/.gradle/.keystore").readText(charset("utf-8"))
 var password = rootProject.file("${passwordPath}\\${packID}").readText(charset("utf-8"))
 
+var appversion = File("MailStartup/MailStartup.jdp").readText(charset("utf-8")).split("Version=")[1].trim()
+var mail_module_version = File("MailStartup/MailStartup.jdp").readText(charset("utf-8")).split("Version=")[1].trim()
+
 task("testPass"){
     doLast{
         println(password)
     }
 }
 
+task("setupVersion"){
+    doLast{
+        //setup files
+        File("MailStartup/MailStartup.jdp").writeText(File("MailStartup/MailStartup.jdp").readText(charset("utf-8")).replace("Version=${appversion}","Version=${localVersion}"),charset("utf-8"))
+        File("Mail/Mail.jdp").writeText(File("Mail/Mail.jdp").readText(charset("utf-8")).replace("Version=${mail_module_version}","Version=${localVersion}"),charset("utf-8"))
+        File("MailStartup/Email.rapc").writeText(File("MailStartup/Email.rapc").readText(charset("utf-8")).replace("MIDlet-Version: ${appversion}","MIDlet-Version: ${localVersion}"),charset("utf-8"))
+        File("Mail/Mail.rapc").writeText(File("Mail/Mail.rapc").readText(charset("utf-8")).replace("MIDlet-Version: ${mail_module_version}","MIDlet-Version: ${localVersion}"),charset("utf-8"))
+    }
+}
+
 task("setupOS5"){
     doLast{
+       //setup files
         var filesStr = "import=${api5_path}\\lib\\net_rim_api.jar\n"
         project.fileTree("Mail/src").filter { it.isFile() }.files.forEach {
             filesStr += it.path + "\n"
@@ -50,6 +65,7 @@ task("setupOS5"){
 }
 task("setupOS6"){
     doLast{
+        //setup files
         var filesStr = "import=${api7_path}\\lib\\net_rim_api.jar\n"
         project.fileTree("Mail/src").filter { it.isFile() }.files.forEach {
             filesStr += it.path + "\n"
@@ -304,10 +320,8 @@ task("Merge6") {
 
 tasks.register<Zip>("zip6") {
     dependsOn(tasks.getByName("Merge6"))
-    var jdp_text = File("MailStartup/MailStartup.jdp").readText(charset("utf-8"))
-    var version = jdp_text.split("Version=")[1].trim()
     var DependsOn = "MailOS6" //jdp_text.split("[DependsOn\r\n")[1].trim().split("\r\n")[0]
-    archiveFileName.set("${DependsOn}-${version}.zip")
+    archiveFileName.set("${DependsOn}-${appversion}.zip")
     destinationDirectory.set(layout.projectDirectory.dir("build"))
     from("${folder}/build/OS6/cache")
 }
@@ -363,10 +377,8 @@ task("Merge") {
 
 tasks.register<Zip>("zip") {
     dependsOn(tasks.getByName("Merge"))
-    var jdp_text = File("MailStartup/MailStartup.jdp").readText(charset("utf-8"))
-    var version = jdp_text.split("Version=")[1].trim()
     var DependsOn = "MailOS5" //jdp_text.split("[DependsOn\r\n")[1].trim().split("\r\n")[0]
-    archiveFileName.set("${DependsOn}-${version}.zip")
+    archiveFileName.set("${DependsOn}-${appversion}.zip")
     destinationDirectory.set(layout.projectDirectory.dir("build"))
     from("${folder}/build/OS5/cache")
 }
