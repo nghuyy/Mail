@@ -17,7 +17,11 @@ var localVersion = "1.0.${buildNumber}"
 val manifest = file("./manifest.json").takeIf { it.exists() }?.let {
     groovy.json.JsonSlurper().parseText(it.readText())
 } as Map<*, *>?
-
+if (manifest != null) {
+    val json = manifest.toMutableMap()
+    buildNumber = (json.get("build") as Int) + 1
+    localVersion = "1.0.${buildNumber}"
+}
 var buildtime = java.text.SimpleDateFormat("hh:mm aa dd/MM/yyyy").format(java.util.Date())
 
 var bb_buildfile = listOf<String>(
@@ -376,7 +380,7 @@ tasks.register("Release") {
             into("dist/")
             include("*.zip")
         }
-        if(File("build/OS6/cache").exists()) {
+        if(File("build/OS5/cache").exists()) {
             copy {
                 from("build/OS5/cache")
                 into("dist/OS5")

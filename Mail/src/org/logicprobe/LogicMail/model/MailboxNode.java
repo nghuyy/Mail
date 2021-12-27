@@ -519,10 +519,10 @@ public class MailboxNode implements Node, Serializable {
 			            this.folderTreeItem, message.getMessageToken());
 			    message.setCachedContent(isCached);
 			}
-			//else if(parentAccount instanceof LocalAccountNode) {
+			else if(parentAccount instanceof LocalAccountNode) {
 			    // Local accounts always have complete message data
-			//   message.setCachedContent(true);
-			//}
+			   message.setCachedContent(true);
+			}
 			return true;
 		}
 		else {

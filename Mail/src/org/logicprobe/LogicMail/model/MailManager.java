@@ -97,7 +97,7 @@ public class MailManager {
                 
                 // Refresh data from local account node
 
-        /*
+
                 LocalAccountNode localAccount = mailRootNode.getLocalAccount();
                 localAccount.refreshMailboxes();
                 localAccount.refreshMailboxStatus();
@@ -111,7 +111,7 @@ public class MailManager {
                         
                         // Refresh messages for local mailboxes
                         localMailboxes[i].refreshMessages(true);
-                }*/
+                }
          
                 
                 systemListener = new SystemListener() {
@@ -310,9 +310,9 @@ public class MailManager {
             fireMailConfigurationChanged();
         }
         
-        //if((e.getGlobalChange() & GlobalConfig.CHANGE_TYPE_DATA) != 0) {
-            //mailRootNode.getLocalAccount().refreshMailboxes();
-        //}
+        if((e.getGlobalChange() & GlobalConfig.CHANGE_TYPE_DATA) != 0) {
+            mailRootNode.getLocalAccount().refreshMailboxes();
+        }
         }
 
     private boolean connectionListChanged(MailSettingsEvent e) {
