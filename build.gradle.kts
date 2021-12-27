@@ -9,7 +9,7 @@ defaultTasks(
         "zip6",
         "Release"
 )
-
+var projectName = "Mail"
 var localVersion = "2.0.19"
 
 var bb_buildfile = listOf<String>(
@@ -23,7 +23,7 @@ var bb_buildfile = listOf<String>(
 )
 var folder = project.projectDir
 var api5_path = "C:\\Program Files (x86)\\Research In Motion\\BlackBerry JDE 5.0.0"
-var api7_path = "C:\\Program Files (x86)\\Research In Motion\\BlackBerry JDE 7.1.0"
+var api6_path = "C:\\Program Files (x86)\\Research In Motion\\BlackBerry JDE 6.0.0"
 var jdk_path = "C:\\Program Files (x86)\\Java\\jdk1.5.0_22\\bin"
 var warnkeyRelease = "warnkey=0x52424200;0x52525400;0x5242534b;0x42424944;0x52435200;0x4e464352;0x52455345"
 var warnkey = "warnkey=0x52424200;0x52525400;0x52435200"
@@ -38,6 +38,34 @@ task("testPass"){
     doLast{
         println(password)
     }
+}
+
+task("generateFiles"){
+    doLast{
+        GenerateFiles(false)
+    }
+}
+
+fun GenerateFiles(v6:Boolean) {
+    var filesStr = if(v6)"import=${api6_path}\\lib\\net_rim_api.jar\n" else "import=${api5_path}\\lib\\net_rim_api.jar\n"
+    var OSString = if(v6)"OS6" else "OS5"
+    var shortPathStr = ""
+    project.fileTree("Mail\\src").filter { it.isFile() }.files.forEach {
+        filesStr += it.path + "\n"
+        shortPathStr += it.path.replace(project.projectDir.toString() + "\\Mail\\", "") + "\n"
+    }
+    project.fileTree("Mail\\res").filter { it.isFile() }.files.forEach {
+        filesStr += it.path + "\n"
+        shortPathStr += it.path.replace(project.projectDir.toString() + "\\Mail\\", "") + "\n"
+    }
+    File("Mail\\${projectName}_${OSString}.files").writeText(filesStr, charset("utf-8"))
+    var jdp_str = File("Mail\\${projectName}_${OSString}.jdp").readText(charset("utf-8"))
+    var arraystr = jdp_str.split("[Files\r\n")
+    var firsttmp = arraystr[0]
+    var lasttmp = arraystr[1]
+    var laststr = lasttmp.split(Regex("\\]"), 2)[1]
+    File("Mail\\${projectName}_${OSString}.jdp").writeText(firsttmp + "[Files\r\n" + shortPathStr + "]" + laststr, charset("utf-8"))
+    //SetupVersion()
 }
 
 task("setupVersion"){
@@ -63,10 +91,11 @@ task("setupOS5"){
         File("Mail.files").writeText(filesStr,charset("utf-8"))
     }
 }
+
 task("setupOS6"){
     doLast{
         //setup files
-        var filesStr = "import=${api7_path}\\lib\\net_rim_api.jar\n"
+        var filesStr = "import=${api6_path}\\lib\\net_rim_api.jar\n"
         project.fileTree("Mail/src").filter { it.isFile() }.files.forEach {
             filesStr += it.path + "\n"
         }
@@ -162,22 +191,22 @@ task("buildOS6") {
     doLast {
         exec {
             commandLine = listOf(
-                    "${api7_path}\\bin\\rapc.exe",
+                    "${api6_path}\\bin\\rapc.exe",
                     "-quiet",
                     "library=build\\OS6\\Mail",
                     "Mail\\Mail.rapc",
                     warnkeyRelease,
-                    "@Mail.files"
+                    "@Mail\\Mail.files"
             )
         }
         exec {
             commandLine = listOf(
-                    "${api7_path}\\bin\\rapc.exe",
+                    "${api6_path}\\bin\\rapc.exe",
                     "-quiet",
                     "library=build\\OS6\\MailOS46",
                     "MailOS46\\MailOS46.rapc",
                     warnkeyRelease,
-                    "import=build\\OS6\\Mail.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "import=build\\OS6\\Mail.jar;${api6_path}\\lib\\net_rim_api.jar",
                     "${folder}\\MailOS46\\src\\org\\logicprobe\\LogicMail\\PlatformInfoBB46.java",
                     "${folder}\\MailOS46\\src\\org\\logicprobe\\LogicMail\\ui\\FieldFactoryBB46.java",
                     "${folder}\\MailOS46\\src\\org\\logicprobe\\LogicMail\\ui\\NotificationHandlerBB46.java",
@@ -187,12 +216,12 @@ task("buildOS6") {
 
         exec {
             commandLine = listOf(
-                    "${api7_path}\\bin\\rapc.exe",
+                    "${api6_path}\\bin\\rapc.exe",
                     "-quiet",
                     "library=build\\OS6\\MailOS47",
                     "MailOS47\\MailOS47.rapc",
                     warnkeyRelease,
-                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;${api6_path}\\lib\\net_rim_api.jar",
                     "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\PlatformInfoBB47.java",
                     "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\FieldFactoryBB47.java",
                     "${folder}\\MailOS47\\src\\org\\logicprobe\\LogicMail\\ui\\ScreenFactoryBB47.java",
@@ -207,12 +236,12 @@ task("buildOS6") {
 
         exec {
             commandLine = listOf(
-                    "${api7_path}\\bin\\rapc.exe",
+                    "${api6_path}\\bin\\rapc.exe",
                     "-quiet",
                     "library=build\\OS6\\MailOS5",
                     "MailOS5\\MailOS5.rapc",
                     warnkeyRelease,
-                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;${api6_path}\\lib\\net_rim_api.jar",
                     "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\PlatformInfoBB50.java",
                     "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\ui\\FieldFactoryBB50.java",
                     "${folder}\\MailOS5\\src\\org\\logicprobe\\LogicMail\\ui\\ScreenFactoryBB50.java",
@@ -223,12 +252,12 @@ task("buildOS6") {
 
         exec {
             commandLine = listOf(
-                    "${api7_path}\\bin\\rapc.exe",
+                    "${api6_path}\\bin\\rapc.exe",
                     "-quiet",
                     "library=build\\OS6\\MailOS6",
                     "MailOS6\\MailOS6.rapc",
                     warnkeyRelease,
-                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;build\\OS6\\MailOS5.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;build\\OS6\\MailOS5.jar;${api6_path}\\lib\\net_rim_api.jar",
                     "${folder}\\MailOS6\\res\\icons\\go-bottom_32x32.png", 
                     "${folder}\\MailOS6\\res\\icons\\go-next_32x32.png",
                     "${folder}\\MailOS6\\res\\icons\\go-previous_32x32.png",
@@ -255,12 +284,12 @@ task("buildOS6") {
 
         exec {
             commandLine = listOf(
-                    "${api7_path}\\bin\\rapc.exe",
+                    "${api6_path}\\bin\\rapc.exe",
                     "-quiet",
                     "codename=build\\OS6\\EMail",
                     "MailStartup\\EMail.rapc",
                     warnkeyRelease,
-                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;build\\OS6\\MailOS6.jar;build\\OS6\\MailOS6.jar;${api7_path}\\lib\\net_rim_api.jar",
+                    "import=build\\OS6\\Mail.jar;build\\OS6\\MailOS46.jar;build\\OS6\\MailOS47.jar;build\\OS6\\MailOS6.jar;build\\OS6\\MailOS6.jar;${api6_path}\\lib\\net_rim_api.jar",
                     "${folder}\\MailStartup\\res\\icons\\blackberryemail.png",
                     "${folder}\\MailStartup\\res\\icons\\blackberryemail_roll.png",
                     "${folder}\\MailStartup\\src\\org\\logicprobe\\LogicMail\\MailStartup.java"
@@ -274,14 +303,14 @@ tasks.create("signSource6") {
         exec {
             commandLine("${jdk_path}\\javaw.exe",
                     "-jar",
-                    "${api7_path}\\bin\\SignatureTool.jar",
+                    "${api6_path}\\bin\\SignatureTool.jar",
                     "-a",
                     "-p",
                     password,
                     "-r",
                     "${folder}/build/OS6"
             )
-            workingDir(api7_path)
+            workingDir(api6_path)
         }
         delete("${folder}/build/OS6/cache")
     }
@@ -299,7 +328,7 @@ task("Merge6") {
         Thread.sleep(2000)
         exec {
             commandLine(
-                    "${api7_path}\\bin\\UpdateJad.exe",
+                    "${api6_path}\\bin\\UpdateJad.exe",
                     "-n",
                     "${folder}\\build\\OS6\\cache\\Email.jad",
                     "${folder}\\build\\OS6\\cache\\Mail.jad",

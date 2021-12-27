@@ -9,7 +9,6 @@
 *.alx
 *.class
 *.mak
-gradle
 gradlew
 gradlew.bat
 .gradle
