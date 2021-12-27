@@ -42,7 +42,7 @@ import org.logicprobe.LogicMail.mail.MailFactory;
  * as its children.
  */
 public class MailRootNode implements Node {
-    private LocalAccountNode localAccountNode;
+    //private LocalAccountNode localAccountNode;
     private final Vector networkAccounts;
     private AccountNode[] accountsArray;
     private NetworkAccountNode[] networkAccountsArray;
@@ -52,9 +52,9 @@ public class MailRootNode implements Node {
         this.networkAccounts = new Vector();
 
         // Add the local mail store account
-        localAccountNode = new LocalAccountNode(new LocalMailStoreServices(
-                (LocalMailStore) MailFactory.createLocalMailStore()));
-        localAccountNode.load();
+        //localAccountNode = new LocalAccountNode(new LocalMailStoreServices(
+        //        (LocalMailStore) MailFactory.createLocalMailStore()));
+        //localAccountNode.load();
     }
 
     public void accept(NodeVisitor visitor) {
@@ -77,10 +77,10 @@ public class MailRootNode implements Node {
         synchronized(accountsLock) {
             if(accountsArray == null) {
                 int size = networkAccounts.size();
-                accountsArray = new AccountNode[size + 1];
-                accountsArray[0] = localAccountNode;
+                accountsArray = new AccountNode[size];
+                //accountsArray[0] = localAccountNode;
                 for(int i=0; i<size; i++) {
-                    accountsArray[i + 1] = (AccountNode)networkAccounts.elementAt(i);
+                    accountsArray[i] = (AccountNode)networkAccounts.elementAt(i);
                 }
             }
         }
@@ -132,9 +132,9 @@ public class MailRootNode implements Node {
      * 
      * @return Local account node.
      */
-    public LocalAccountNode getLocalAccount() {
-        return localAccountNode;
-    }
+    //public LocalAccountNode getLocalAccount() {
+    //    return localAccountNode;
+    //}
 
     /**
      * Adds a network account to the mail data model.

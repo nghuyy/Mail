@@ -1,8 +1,8 @@
-MIDlet-Name: Mail_OS5
-MIDlet-Version: 2.0.19
+MIDlet-Name: Mail_OS6
+MIDlet-Version: 1.0.24
 MIDlet-Vendor: VNAPPS
 MIDlet-Description: VNAPPS
-MIDlet-Jar-URL: Mail_OS5.jar
+MIDlet-Jar-URL: Mail_OS6.jar
 MIDlet-Jar-Size: 0
 MicroEdition-Profile: MIDP-2.0
 MicroEdition-Configuration: CLDC-1.1

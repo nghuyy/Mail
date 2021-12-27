@@ -876,15 +876,15 @@ public class AccountConfigWizard extends WizardController {
         MailRootNode rootNode = MailManager.getInstance().getMailRootNode();
         
         // Attempt to find local Sent/Drafts folders, and associate them
-        MailboxNode[] localMailboxes = rootNode.getLocalAccount().getRootMailbox().getMailboxes();
-        for(int i=0; i<localMailboxes.length; i++) {
-            if(localMailboxes[i].getType() == MailboxNode.TYPE_SENT) {
-                accountConfig.setSentMailbox(localMailboxes[i]);
-            }
-            else if(localMailboxes[i].getType() == MailboxNode.TYPE_DRAFTS) {
-                accountConfig.setDraftMailbox(localMailboxes[i]);
-            }
-        }
+        //MailboxNode[] localMailboxes = rootNode.getLocalAccount().getRootMailbox().getMailboxes();
+        //for(int i=0; i<localMailboxes.length; i++) {
+        //    if(localMailboxes[i].getType() == MailboxNode.TYPE_SENT) {
+        //        accountConfig.setSentMailbox(localMailboxes[i]);
+       //     }
+       //     else if(localMailboxes[i].getType() == MailboxNode.TYPE_DRAFTS) {
+       //         accountConfig.setDraftMailbox(localMailboxes[i]);
+       //     }
+        //}
 
         // Set the global options that may have been changed
         GlobalConfig globalConfig = mailSettings.getGlobalConfig();

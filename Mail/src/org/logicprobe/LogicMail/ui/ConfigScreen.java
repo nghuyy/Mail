@@ -114,8 +114,8 @@ public class ConfigScreen extends AbstractConfigScreen {
     private CheckboxField autoStartupCheckboxField;
     private CheckboxField notificationIconCheckboxField;
     private ObjectChoiceField localDataLocationChoiceLabel;
-    private CheckboxField connectionDebuggingCheckboxField;
-    private CheckboxField unicodeNormalizationCheckboxField;
+    //private CheckboxField connectionDebuggingCheckboxField;
+    //private CheckboxField unicodeNormalizationCheckboxField;
     private ObjectChoiceField languageChoiceField;
     private ButtonField clearCacheButtonField;
     private CheckboxField analyticsCheckboxField;
@@ -469,7 +469,7 @@ public class ConfigScreen extends AbstractConfigScreen {
                 LogicMailResource.CONFIG_GLOBAL_LANGUAGE,
                 languageChoices,
                 languageIndex);
-
+        /*
         unicodeNormalizationCheckboxField = new CheckboxField(
                 LogicMailResource.CONFIG_GLOBAL_UNICODE_NORMALIZATION,
                 existingGlobalConfig.getUnicodeNormalization());
@@ -477,6 +477,7 @@ public class ConfigScreen extends AbstractConfigScreen {
         connectionDebuggingCheckboxField = new CheckboxField(
                 LogicMailResource.CONFIG_GLOBAL_CONNECTION_DEBUGGING,
                 existingGlobalConfig.getConnDebug());
+        */
 
         LabelField clearCacheLabelField = new LabelField(
                 LogicMailResource.CONFIG_GLOBAL_MAILBOX_CACHE + ' ',
@@ -508,8 +509,8 @@ public class ConfigScreen extends AbstractConfigScreen {
         
         // Locale override is not used in release builds
         otherFieldManager.add(languageChoiceField);
-        otherFieldManager.add(unicodeNormalizationCheckboxField);
-        otherFieldManager.add(connectionDebuggingCheckboxField);
+        //otherFieldManager.add(unicodeNormalizationCheckboxField);
+        //otherFieldManager.add(connectionDebuggingCheckboxField);
 
         if(AnalyticsDataCollector.isWebtrendsAvailable()) {
             otherFieldManager.add(analyticsCheckboxField);
@@ -1073,7 +1074,7 @@ public class ConfigScreen extends AbstractConfigScreen {
             config.setLanguageCode("");
         }
 
-        config.setUnicodeNormalization(unicodeNormalizationCheckboxField.getChecked());
+        //config.setUnicodeNormalization(unicodeNormalizationCheckboxField.getChecked());
 
         config.setMessageDisplayFormat(messageDisplayChoiceField.getSelectedIndex());
 
@@ -1113,24 +1114,9 @@ public class ConfigScreen extends AbstractConfigScreen {
             config.setLocalHostname("");
         }
 
-        config.setConnDebug(connectionDebuggingCheckboxField.getChecked());
-        
-        toggleAnalyticsValue(AppInfo.isAnalyticsEnabled(), analyticsCheckboxField.getChecked());
+        //config.setConnDebug(connectionDebuggingCheckboxField.getChecked());
         
         mailSettings.saveSettings();
     }
 
-    private void toggleAnalyticsValue(boolean oldValue, boolean newValue) {
-        if(oldValue == newValue) { return; }
-        
-        AppInfo.setAnalyticsEnabled(newValue);
-        
-        if(oldValue == false && newValue == true) {
-            AnalyticsDataCollector.updateAnalyticsState();
-            UiApplication.getUiApplication().activate();
-        }
-        else if(oldValue == true && newValue == false) {
-            AnalyticsDataCollector.updateAnalyticsState();
-        }
-    }
 }
