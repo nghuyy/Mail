@@ -388,25 +388,8 @@ public class MailboxScreen extends AbstractScreenProvider {
 	    markPriorOpenedItem = new MenuItem( LogicMailResource.MENUITEM_MARK_PRIOR_OPENED, 400110, 2000) {
             public void run() {
                 if(!(currentContextField instanceof MessageSeparatorField)) { return; }
-                
-                int choice = Dialog.ask(
-                        LogicMailResource.MAILBOX_MARK_ALL_PRIOR_ITEMS_OPENED_PROMPT,
-                        new Object[] {
-                                LogicMailResource.MENUITEM_MARK_OPENED,
-                                LogicMailResource.MENUITEM_CANCEL
-                        },
-                        new int[] { Dialog.OK, Dialog.CANCEL },
-                        Dialog.CANCEL);
-                
-                if(choice == Dialog.OK) {
-                    AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "markPriorOpened");
-                    Date separatorDate = ((MessageSeparatorField)currentContextField).getDate();
-                    
-                    // The separator date is midnight on the day it shows,
-                    // so we pass a date that is exactly one day past it to
-                    // ensure the desired effect of this request.
-                    mailboxNode.markPriorMessagesOpened(new Date(separatorDate.getTime() + 86400000));
-                }
+                Date separatorDate = ((MessageSeparatorField)currentContextField).getDate();
+                mailboxNode.markPriorMessagesOpened(new Date(separatorDate.getTime() + 86400000));
             }
         };
 	}

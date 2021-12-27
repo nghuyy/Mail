@@ -18,7 +18,7 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
-Mail
+Mail_OS6
 ]
 ExcludeFromBuildAll=0
 Exported=0

@@ -9,10 +9,7 @@ Debug
 Release
 ]
 [DebugActiveProjects
-Mail\Mail.jdp
-MailOS46.jdp
 MailOS46\MailOS46.jdp
-MailOS47.jdp
 MailOS47\MailOS47.jdp
 MailOS5\MailOS5.jdp
 MailStartup\MailStartup.jdp
@@ -26,13 +23,13 @@ DependenciesInWorkspace=0
 [ManifestImports
 ]
 [Projects
-Mail\Mail.jdp
+Mail\Mail_OS5.jdp
 MailOS46\MailOS46.jdp
 MailOS47\MailOS47.jdp
 MailOS5\MailOS5.jdp
 MailStartup\MailStartup.jdp
 ]
 [ReleaseActiveProjects
-MailOS6\MailOS6.jdp
+Mail\Mail_OS5.jdp
 MailStartup\MailStartup.jdp
 ]
