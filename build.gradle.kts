@@ -19,7 +19,7 @@ val manifest = file("./manifest.json").takeIf { it.exists() }?.let {
 } as Map<*, *>?
 if (manifest != null) {
     val json = manifest.toMutableMap()
-    buildNumber = (json.get("build") as Int) + 1
+    buildNumber = (json.get("build") as Int)
     localVersion = "1.0.${buildNumber}"
 }
 var buildtime = java.text.SimpleDateFormat("hh:mm aa dd/MM/yyyy").format(java.util.Date())
@@ -52,6 +52,7 @@ task("testPass"){
 
 task("Build"){
     doLast{
+        clean()
         SetupVersion()
         GenerateFiles(true)
         GenerateFiles(false)
@@ -60,6 +61,20 @@ task("Build"){
     }
 }
 
+task("Build6"){
+    doLast{
+        clean()
+        SetupVersion()
+        GenerateFiles(true)
+        build(true)
+    }
+}
+task("GenerateFiles"){
+    doLast{
+        GenerateFiles(true)
+        GenerateFiles(false)
+    }
+}
 fun SetupVersion() {
     //setup files
     if (manifest != null) {
@@ -111,7 +126,17 @@ fun SetupVersion() {
 }
 
 fun GenerateFiles(v6:Boolean) {
-    var filesStr = if(v6)"import=${api6_path}\\lib\\net_rim_api.jar\n" else "import=${api5_path}\\lib\\net_rim_api.jar\n"
+    copy {
+        from("../HLibs/build")
+        into("./build/OS6")
+        include("*.jad", "*.cod", "*.jar")
+    }
+    copy {
+        from("../HLibs/build")
+        into("./build/OS5")
+        include("*.jad", "*.cod", "*.jar")
+    }
+    var filesStr = if(v6)"import=${api6_path}\\lib\\net_rim_api.jar;build\\OS6\\HLibs.jar\n" else "import=${api5_path}\\lib\\net_rim_api.jar;build\\OS5\\HLibs.jar\n"
     var OSString = if(v6)"OS6" else "OS5"
     var shortPathStr = ""
     project.fileTree("Mail\\src").filter { it.isFile() }.files.forEach {
@@ -206,6 +231,10 @@ fun build(osv6:Boolean){
                     "${folder}\\MailStartup\\src\\org\\logicprobe\\LogicMail\\MailStartup.java"
             )
         }
+        copy {
+            from("./manifest.json")
+            into("./build/OS5")
+        }
     }else {
         exec {
             commandLine = listOf(
@@ -251,6 +280,11 @@ fun build(osv6:Boolean){
                     "${folder}\\MailStartup\\res\\icons\\blackberryemail_roll.png",
                     "${folder}\\MailStartup\\src\\org\\logicprobe\\LogicMail\\MailStartup.java"
             )
+        }
+
+        copy {
+            from("./manifest.json")
+            into("./build/OS6")
         }
     }
 }
@@ -408,7 +442,14 @@ tasks.register("Release") {
                 into("dist/OS6")
             }
         }
-
+        copy {
+            from("./manifest.json")
+            into("./dist/OS5")
+        }
+        copy {
+            from("./manifest.json")
+            into("./dist/OS6")
+        }
         exec {
             workingDir = File("./dist")
             commandLine = listOf("git", "add", ".")
@@ -424,8 +465,7 @@ tasks.register("Release") {
     }
 }
 
-task("clean") {
-    doLast {
+fun clean() {
         delete("build")
         delete(fileTree("Mail").matching {
             include(bb_buildfile)
@@ -446,6 +486,5 @@ task("clean") {
             include(bb_buildfile)
         })
         delete("dist")
-    }
 }
 

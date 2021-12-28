@@ -18,12 +18,14 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
+HLibs
 ]
 Description=VNAPPS
 ExcludeFromBuildAll=0
 Exported=0
 [Files
 src\org\logicprobe\LogicMail\AnalyticsDataCollector.java
+src\org\logicprobe\LogicMail\App.java
 src\org\logicprobe\LogicMail\AppInfo.java
 src\org\logicprobe\LogicMail\conf\AccountConfig.java
 src\org\logicprobe\LogicMail\conf\ConnectionConfig.java
@@ -387,10 +389,13 @@ res\icons\shortcut-message-reply.png
 res\icons\shortcut-up-d.png
 res\icons\shortcut-up.png
 res\icons\splash-logo.png
+res\Localization.rrc
+res\Localization.rrh
+res\Localization_vi.rrc
 ]
 HaveAlxImports=0
 HaveDefs=0
-HaveImports=0
+HaveImports=1
 [Icons
 res\icons\blackberryemail.png
 ]
@@ -413,4 +418,4 @@ StartupTier=7
 SystemModule=0
 Type=2
 Vendor=VNAPPS
-Version=1.0.27
+Version=1.0.35

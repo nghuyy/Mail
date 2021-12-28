@@ -23,6 +23,8 @@ DependenciesInWorkspace=0
 [ManifestImports
 ]
 [Projects
+..\HLibs\HLibs.jdp
+..\JSON\JSON.jdp
 Mail\Mail_OS5.jdp
 MailOS46\MailOS46.jdp
 MailOS47\MailOS47.jdp
@@ -30,6 +32,8 @@ MailOS5\MailOS5.jdp
 MailStartup\MailStartup.jdp
 ]
 [ReleaseActiveProjects
+..\HLibs\HLibs.jdp
+..\JSON\JSON.jdp
 Mail\Mail_OS5.jdp
 MailStartup\MailStartup.jdp
 ]

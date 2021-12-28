@@ -30,9 +30,16 @@
  */
 package org.logicprobe.LogicMail.ui;
 
-import org.logicprobe.LogicMail.AnalyticsDataCollector;
-import org.logicprobe.LogicMail.LogicMail;
-import org.logicprobe.LogicMail.LogicMailResource;
+import huynguyen.bbos.Net;
+import huynguyen.bbos.UI;
+import huynguyen.bbos.java.IRequestCallback;
+import huynguyen.bbos.ults.Updator;
+import huynguyen.bbos.views.UpdateDiag;
+import net.rim.device.api.system.ApplicationDescriptor;
+import net.rim.device.api.system.DeviceInfo;
+import org.json.me.JSONException;
+import org.json.me.JSONObject;
+import org.logicprobe.LogicMail.*;
 import org.logicprobe.LogicMail.model.AccountNode;
 import org.logicprobe.LogicMail.model.MailManager;
 import org.logicprobe.LogicMail.model.NetworkAccountNode;
@@ -310,11 +317,63 @@ public class StandardScreen extends MainScreen {
         if (instance == Menu.INSTANCE_DEFAULT) {
             menu.add(configItem);
             menu.add(aboutItem);
+            menu.add(new MenuItem("Check Update",3600,0){
+                public void run() {
+                    CheckUpdate();
+                }
+            });
             menu.add(closeItem);
             menu.add(exitItem);
         }
     }
+    public static void CheckUpdate() {
+        final ResourceBundle _resources = App.getResource();
+        String osVersion = DeviceInfo.getSoftwareVersion();
+        String updateLink = App.UPDATE_URL5;
+        String updateJad = App.UPDATE_JAD5;
+        if(osVersion.startsWith("6.") || osVersion.startsWith("7.")){
+            updateLink = App.UPDATE_URL6;
+            updateJad = App.UPDATE_JAD6;
+        }
+        final String finalUpdateJad = updateJad;
+        Net.GET(updateLink, new IRequestCallback() {
+            public void success(final String message) {
+                UI.r(new Runnable() {
+                    public void run() {
+                        ApplicationDescriptor appDesc =
+                                ApplicationDescriptor.currentApplicationDescriptor();
 
+                        try {
+                            JSONObject jsonObject = new JSONObject(message);
+                            boolean hasupdate = Updator.check(jsonObject.getInt("build"), appDesc.getVersion());
+                            if (hasupdate) {
+                                String[] bundle = new String[]{
+                                        _resources.getString(LocalizationResource.UPDATE_AVAIABLE),
+                                        _resources.getString(LocalizationResource.VERSION_D),
+                                        _resources.getString(LocalizationResource.TIME_D),
+                                        _resources.getString(LocalizationResource.GET_UPDATE)
+                                };
+                                (new UpdateDiag(finalUpdateJad, jsonObject.getString("version"), jsonObject.getString("time"))).doModal();
+                            } else {
+                                Dialog.alert(_resources.getString(LocalizationResource.NO_UPDATE));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+
+            public void error(final String message) {
+                UI.r(new Runnable() {
+                    public void run() {
+                        Dialog.alert(message);
+                    }
+                });
+            }
+        });
+    }
     /* (non-Javadoc)
      * @see net.rim.device.api.ui.container.MainScreen#onSavePrompt()
      */

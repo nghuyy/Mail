@@ -52,9 +52,7 @@ public class MailStartup {
      * 
      * @param args The arguments
      */
-    public static void main(String[] args) {
-        // Register with the event logger
-        EventLogger.register(AppInfo.GUID, "EMail", EventLogger.VIEWER_STRING);        
+    public static void main(String[] args) {      
         LogicMail app = new LogicMail(args);
         app.run();
     }
