@@ -686,7 +686,7 @@ public class AccountConfigScreen extends AbstractConfigScreen {
         // and any local account nodes.
         MailRootNode mailRootNode = MailManager.getInstance().getMailRootNode();
         Vector accountNodeVector = new Vector(2);
-        //accountNodeVector.addElement(mailRootNode.getLocalAccount());
+        accountNodeVector.addElement(mailRootNode.getLocalAccount());
         
         AccountNode currentAccountNode = mailRootNode.findAccountForConfig(accountConfig);
         if(currentAccountNode != null) {

@@ -375,6 +375,10 @@ tasks.register("Release") {
         exec {
             commandLine = listOf("git", "clone", "git@github.com:nghuyy/BlackberryMail_Release.git", "dist")
         }
+        delete(fileTree("dist").matching {
+            include("*.zip")
+        })
+
         copy {
             from("build/")
             into("dist/")
