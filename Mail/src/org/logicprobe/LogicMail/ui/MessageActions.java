@@ -173,12 +173,6 @@ public class MessageActions {
 
     protected static void trackButtonClick(String eventType) {
         return;
-        /* F*k tracking
-        Screen screen = UiApplication.getUiApplication().getActiveScreen();
-        if(screen instanceof StandardScreen) {
-            StandardScreen standardScreen = (StandardScreen)screen;
-            AnalyticsDataCollector.getInstance().onButtonClick(standardScreen.getScreenPath(), standardScreen.getScreenName(), eventType);
-        }*/
     }
 
     /**

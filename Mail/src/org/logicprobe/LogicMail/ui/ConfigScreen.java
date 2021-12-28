@@ -102,12 +102,12 @@ public class ConfigScreen extends AbstractConfigScreen {
     private ObjectChoiceField expungeModeChoiceField;
     
     // Networking
-    private VerticalFieldManager networkingFieldManager;
-    private ObjectChoiceField networkTransportChoiceField;
-    private CheckboxField enableWiFiCheckboxField;
-    private CheckboxField enableHandoverCheckboxField;
-    private CheckboxField overrideHostnameCheckboxField;
-    private BasicEditField localHostnameEditField;
+    //private VerticalFieldManager networkingFieldManager;
+    //private ObjectChoiceField networkTransportChoiceField;
+    //private CheckboxField enableWiFiCheckboxField;
+    //private CheckboxField enableHandoverCheckboxField;
+    //private CheckboxField overrideHostnameCheckboxField;
+    //private BasicEditField localHostnameEditField;
 
     // Other
     private VerticalFieldManager otherFieldManager;
@@ -213,32 +213,14 @@ public class ConfigScreen extends AbstractConfigScreen {
 
     private void initLanguageChoices() {
         languageChoices = new String[] {
-                "BlackBerry",   // System default
-                "\u010cesky",   // Czech: cs
-                "Dansk",        // Danish: da
-                "Deutsch",      // German: de
+                "System",   // System default
                 "English",      // English: en
-                "Espa\u00f1ol", // Spanish: es
-                "Fran\u00e7ais",// French: fr
-                "Italiano",     // Italian: it
-                "Nederlands",   // Dutch: nl
-                "\ufeff\u0420\u0443\u0441\u0441\u043a\u0438\u0439", // Russian: ru
                 "Ti\u00ea\u0301ng Vi\u00ea\u0323t", // Vietnamese: vi
-                "\u4E2D\u6587", // Chinese: zh
         };
         languageCodes = new String[] {
                 "",   // System default
-                "cs", // Czech
-                "da", // Danish
-                "de", // German
                 "en", // English
-                "es", // Spanish
-                "fr", // French
-                "it", // Italian
-                "nl", // Dutch
-                "ru", // Russian
                 "vi", // Vietnamese
-                "zh", // Chinese
         };
     }
 
@@ -248,7 +230,7 @@ public class ConfigScreen extends AbstractConfigScreen {
     private void initFields() {
         initAccountFields();
         initMessageDisplayFields();
-        initNetworkingFields();
+        //initNetworkingFields();
         initOtherFields();
     }
 
@@ -374,7 +356,7 @@ public class ConfigScreen extends AbstractConfigScreen {
         messageDisplayFieldManager.add(new BlankSeparatorField(separatorHeight));
         add(messageDisplayFieldManager);
     }
-    
+    /*
     private void initNetworkingFields() {
         networkingFieldManager = new VerticalFieldManager();
         
@@ -425,18 +407,18 @@ public class ConfigScreen extends AbstractConfigScreen {
             localHostnameEditField.setEditable(false);
         }
         
-        networkingFieldManager.add(new LabeledSeparatorField(
-                LogicMailResource.CONFIG_GLOBAL_SECTION_NETWORKING,
-                Field.NON_FOCUSABLE | LabeledSeparatorField.TOP_BORDER | LabeledSeparatorField.BOTTOM_BORDER));
-        networkingFieldManager.add(networkTransportChoiceField);
-        networkingFieldManager.add(enableWiFiCheckboxField);
-        networkingFieldManager.add(enableHandoverCheckboxField);
-        networkingFieldManager.add(overrideHostnameCheckboxField);
-        networkingFieldManager.add(localHostnameEditField);
-        networkingFieldManager.add(new BlankSeparatorField(separatorHeight));
-        add(networkingFieldManager);
+        //networkingFieldManager.add(new LabeledSeparatorField(
+        //        LogicMailResource.CONFIG_GLOBAL_SECTION_NETWORKING,
+       //         Field.NON_FOCUSABLE | LabeledSeparatorField.TOP_BORDER | LabeledSeparatorField.BOTTOM_BORDER));
+        //networkingFieldManager.add(networkTransportChoiceField);
+        //networkingFieldManager.add(enableWiFiCheckboxField);
+        //networkingFieldManager.add(enableHandoverCheckboxField);
+        //networkingFieldManager.add(overrideHostnameCheckboxField);
+        //networkingFieldManager.add(localHostnameEditField);
+        //networkingFieldManager.add(new BlankSeparatorField(separatorHeight));
+        //add(networkingFieldManager);
     }
-
+        */
     private void initOtherFields() {
         otherFieldManager = new VerticalFieldManager();
         
@@ -622,7 +604,7 @@ public class ConfigScreen extends AbstractConfigScreen {
         }
         return result;
     }
-    
+    /*
     private void networkTransportChoiceFieldChanged(Field field, int context) {
         if(networkTransportChoiceField.getSelectedIndex() == 4) {
             enableWiFiCheckboxField.setChecked(true);
@@ -645,7 +627,7 @@ public class ConfigScreen extends AbstractConfigScreen {
             localHostnameEditField.setEditable(false);
         }
     }
-    
+    */
     private void clearCacheButtonFieldChanged(Field field, int context) {
         if(!clearingCache) {
             clearingCache = true;
@@ -1089,10 +1071,10 @@ public class ConfigScreen extends AbstractConfigScreen {
         config.setPromptOnDelete(promptOnDeleteCheckboxField.getChecked());
         config.setExpungeMode(expungeModeChoiceField.getSelectedIndex());
         
-        config.setTransportType(getTransportSetting(networkTransportChoiceField.getSelectedIndex()));
+        //config.setTransportType(getTransportSetting(networkTransportChoiceField.getSelectedIndex()));
         
-        config.setEnableWiFi(enableWiFiCheckboxField.getChecked());
-        config.setConnectionHandoverEnabled(enableHandoverCheckboxField.getChecked());
+        //config.setEnableWiFi(enableWiFiCheckboxField.getChecked());
+        //config.setConnectionHandoverEnabled(enableHandoverCheckboxField.getChecked());
 
         config.setAutoStartupEnabled(autoStartupCheckboxField.getChecked());
         
@@ -1108,11 +1090,11 @@ public class ConfigScreen extends AbstractConfigScreen {
             config.setFilesystemRoot(fileSystemRoots[fsRootIndex]);
         }
 
-        if (overrideHostnameCheckboxField.getChecked()) {
-            config.setLocalHostname(localHostnameEditField.getText().trim());
-        } else {
-            config.setLocalHostname("");
-        }
+        //if (overrideHostnameCheckboxField.getChecked()) {
+         //   config.setLocalHostname(localHostnameEditField.getText().trim());
+        //} else {
+        //    config.setLocalHostname("");
+        //}
 
         //config.setConnDebug(connectionDebuggingCheckboxField.getChecked());
         

@@ -90,8 +90,7 @@ public class ImapConfig extends AccountConfig {
      * @see org.logicprobe.LogicMail.conf.AccountConfig#toString()
      */
     public String toString() {
-        String text = getAcctName().concat(" (IMAP)");
-        return text;
+        return getAcctName();
     }
 
     /**
