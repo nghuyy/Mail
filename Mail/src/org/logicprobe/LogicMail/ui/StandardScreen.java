@@ -221,27 +221,22 @@ public class StandardScreen extends MainScreen {
     private void initMenuItems() {
         configItem = new MenuItem(LogicMailResource.MENUITEM_CONFIGURATION, 800000, 9000) {
             public void run() {
-                AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "config");
                 showConfigScreen();
             }
         };
         aboutItem = new MenuItem(LogicMailResource.MENUITEM_ABOUT, 800100, 9000) {
             public void run() {
-                AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "about");
-                // Show the about dialog
                 AboutDialog dialog = new AboutDialog();
                 dialog.doModal();
             }
         };
         closeItem = new MenuItem(LogicMailResource.MENUITEM_CLOSE, 60000000, 9000) {
             public void run() {
-                AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "close");
                 StandardScreen.this.onClose();
             }
         };
         exitItem = new MenuItem(LogicMailResource.MENUITEM_EXIT, 60000100, 9000) {
             public void run() {
-                AnalyticsDataCollector.getInstance().onButtonClick(getScreenPath(), getScreenName(), "exit");
                 tryShutdownApplication();
             }
         };
@@ -317,7 +312,7 @@ public class StandardScreen extends MainScreen {
         if (instance == Menu.INSTANCE_DEFAULT) {
             menu.add(configItem);
             menu.add(aboutItem);
-            menu.add(new MenuItem("Check Update",3600,0){
+            menu.add(new MenuItem("Check Update(a)",3600,0){
                 public void run() {
                     CheckUpdate();
                 }
@@ -421,6 +416,14 @@ public class StandardScreen extends MainScreen {
      * @see net.rim.device.api.ui.Screen#keyChar(char, int, int)
      */
     protected boolean keyChar(char c, int status, int time) {
+        switch (c) {
+            case 'x':
+                tryShutdownApplication();
+                return true;
+            case 'a':
+                CheckUpdate();
+                return true;
+        }
         return screenProvider.keyChar(c, status, time);
     }
 

@@ -3,7 +3,7 @@ package org.logicprobe.LogicMail;
 public class LogicMailResource {
 	public static final String CONFIG_OUTGOING_TITLE = "Outgoing (SMTP)";
 	public static final String APPNAME  = "Mail";
-	public static final String ABOUT_LICENSE="Email for BBOS is Copyright © 2021";
+	public static final String ABOUT_LICENSE="Email for BBOS is Copyright ï¿½ 2021";
 	public static final String ABOUT_LICENSE_ACCEPT="Click \"Accept\" to accept the terms of the license agreement, or \"Decline\" to decline the agreement and exit LogicMail.";
 	public static final String ABOUT_TITLE="About";
 	public static final String ABOUT_URL="http://vnapps.com/BBOS/BlackberryMail_Release/";
@@ -176,7 +176,7 @@ public class LogicMailResource {
 	public static final String MENUITEM_DISCARD="Discard";
 	public static final String MENUITEM_DISCONNECT="Disconnect";
 	public static final String MENUITEM_EDIT="Edit";
-	public static final String MENUITEM_EXIT="Exit";
+	public static final String MENUITEM_EXIT="Exit(x)";
 	public static final String MENUITEM_FORWARD="Forward...";
 	public static final String MENUITEM_GET_HTML="Get HTML";
 	public static final String MENUITEM_GET_PLAIN_TEXT="Get Plain Text";
@@ -197,7 +197,7 @@ public class LogicMailResource {
 	public static final String MENUITEM_PREVIOUS="Previous";
 	public static final String MENUITEM_PROMPT="Prompt";
 	public static final String MENUITEM_PROPERTIES="Properties";
-	public static final String MENUITEM_REFRESH_FOLDERS="Refresh folders";
+	public static final String MENUITEM_REFRESH_FOLDERS="Refresh folders(u)";
 	public static final String MENUITEM_REFRESH_STATUS="Refresh status";
 	public static final String MENUITEM_REPLY="Reply...";
 	public static final String MENUITEM_REPLYTOALL="Reply to all...";

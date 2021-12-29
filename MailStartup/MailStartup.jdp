@@ -18,7 +18,7 @@ AutoRestart=0
 [DefFiles
 ]
 [DependsOn
-MailOS6
+MailOS5
 ]
 Description=Email
 ExcludeFromBuildAll=0
@@ -54,4 +54,4 @@ SystemModule=0
 Title=EMail
 Type=0
 Vendor=VNAPPS.COM
-Version=1.0.37
+Version=1.0.42

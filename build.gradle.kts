@@ -69,6 +69,16 @@ task("Build6"){
         build(true)
     }
 }
+
+task("Build5"){
+    doLast{
+        clean()
+        SetupVersion()
+        GenerateFiles(false)
+        build(false)
+    }
+}
+
 task("GenerateFiles"){
     doLast{
         GenerateFiles(true)
@@ -136,7 +146,14 @@ fun GenerateFiles(v6:Boolean) {
         into("./build/OS5")
         include("*.jad", "*.cod", "*.jar")
     }
-    var filesStr = if(v6)"import=${api6_path}\\lib\\net_rim_api.jar;build\\OS6\\HLibs.jar\n" else "import=${api5_path}\\lib\\net_rim_api.jar;build\\OS5\\HLibs.jar\n"
+    if(!v6){
+        copy {
+            from("../JSON/build")
+            into("./build/OS5")
+            include("*.jad", "*.cod", "*.jar")
+        }
+    }
+    var filesStr = if(v6)"import=${api6_path}\\lib\\net_rim_api.jar;build\\OS6\\HLibs.jar\n" else "import=${api5_path}\\lib\\net_rim_api.jar;build\\OS5\\HLibs.jar;build\\OS5\\JSON.jar\n"
     var OSString = if(v6)"OS6" else "OS5"
     var shortPathStr = ""
     project.fileTree("Mail\\src").filter { it.isFile() }.files.forEach {
@@ -226,8 +243,8 @@ fun build(osv6:Boolean){
                     "MailStartup\\MailStartup.rapc",
                     warnkeyRelease,
                     "import=build\\OS5\\Mail.jar;build\\OS5\\MailOS46.jar;build\\OS5\\MailOS47.jar;build\\OS5\\MailOS5.jar;${api5_path}\\lib\\net_rim_api.jar",
-                    "${folder}\\MailStartup\\res\\icons\\messages.png",
-                    "${folder}\\MailStartup\\res\\icons\\messages_roll.png",
+                    "${folder}\\MailStartup\\res\\icons\\blackberryemail.png",
+                    "${folder}\\MailStartup\\res\\icons\\blackberryemail_roll.png",
                     "${folder}\\MailStartup\\src\\org\\logicprobe\\LogicMail\\MailStartup.java"
             )
         }
@@ -345,7 +362,6 @@ tasks.register<Zip>("zip6") {
     destinationDirectory.set(layout.projectDirectory.dir("build"))
     from("${folder}/build/OS6/cache")
 }
-
 
 tasks.create("signSource") {
     doLast {
