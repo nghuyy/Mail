@@ -8,4 +8,6 @@ ___
 
 + Using new BuildControler with Kotlin DSL
 
+> 04/01/2022 RIM go to the hell.
+
 ![](https://github.com/nghuyy/Mail/blob/f88011c96027368d4e32b860d6ce6e6b695cffb4/img/s1.jpg)
